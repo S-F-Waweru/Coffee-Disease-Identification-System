@@ -57,7 +57,7 @@
             android:backgroundTint="@color/white"
             android:fontFamily="@font/open_sans"
             android:hint="Recommendation Description"
-            android:inputType="textImeMultiLine |textMultiLine"
+            android:inputType="textMultiLine|textImeMultiLine"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/black"
@@ -66,7 +66,7 @@
 
     <!--    Add Button -->
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAddDisease"
+        android:id="@+id/btnAddRecommendation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
