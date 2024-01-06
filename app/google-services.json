@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "946282867088",
+    "project_id": "coffeedias-dbf8f",
+    "storage_bucket": "coffeedias-dbf8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946282867088:android:4891c1d60a9be91c902b15",
+        "android_client_info": {
+          "package_name": "com.example.coffeediasfp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj9Awh4jyaM-K49faFZVz45Lsu2qKVTxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

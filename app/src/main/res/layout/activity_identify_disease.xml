@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IdentifyDiseaseActivity"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="540sp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="315dp"
+            android:layout_height="152dp"
+            android:layout_above="@+id/btnCapture"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="64sp"
+            android:layout_marginTop="64sp"
+            android:layout_marginEnd="64sp"
+            android:layout_marginBottom="64sp"
+            android:elevation="4sp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher_leaf_dias" />
+
+
+        <Button
+            android:id="@+id/btnCapture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnChoose"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="64sp"
+            android:layout_marginEnd="64sp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/green"
+            android:drawableTint="@color/green"
+            android:elevation="4sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Capture Photo"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnChoose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="64sp"
+            android:layout_marginEnd="64sp"
+            android:layout_marginBottom="135dp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/green"
+            android:elevation="4sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:text=" Choose from Gallery"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnPredict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="64sp"
+            android:layout_marginEnd="64sp"
+            android:layout_marginBottom="55dp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/green"
+            android:elevation="4sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:text=" Predict"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RL"
+        android:layout_width="match_parent"
+        android:layout_height="326dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.151">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="97sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="32sp"
+            android:layout_marginTop="32sp"
+            android:layout_marginEnd="250sp"
+            android:fontFamily="@font/open_sans"
+            android:text="Plant Result :"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16sp"
+            android:layout_marginEnd="64sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Recommended Action :"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="-150sp"
+            android:layout_marginTop="32sp"
+            android:layout_marginEnd="64sp"
+            android:layout_toEndOf="@+id/textView2"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Disease" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginHorizontal="48dp"
+                android:padding="4sp"
+                android:text="Latitude:" />
+
+            <TextView
+                android:id="@+id/latTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="48dp"
+                android:text="Latitude will be here! "
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="48dp"
+                android:padding="4sp"
+                android:fontFamily="sans-serif-black"
+                android:text="Longitude:" />
+
+            <TextView
+                android:id="@+id/lonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="48dp"
+                android:text="Longitude will be here! "
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    tools:ignore="MissingDefaultResource">
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ExtraText"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frameLayout">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="8dp"
+                android:paddingStart="12sp"
+                android:paddingEnd="12sp"
+                android:id="@+id/toolbar"
+                app:menu="@menu/toolbar_menu">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/leaf"/>
+            </androidx.appcompat.widget.Toolbar>
+            <!--        the main menu -->
+
+            <GridView
+                android:id="@+id/dashboardGrid"
+                android:layout_width="match_parent"
+                android:layout_height="684dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:horizontalSpacing="6dp"
+                android:numColumns="2"
+                android:textAlignment="center"
+                android:verticalSpacing="6dp" />
+
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_nav"
+            android:background="@color/white"
+            android:id="@+id/bottonNavView">
+
+
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

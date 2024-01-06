@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Home"
+        android:icon="@drawable/home_img"
+        android:id="@+id/botNavHome"
+        />
+    <item
+        android:title="Diseases"
+        android:icon="@drawable/diagnose_img"
+        android:id="@+id/botNavDiseases"
+        />
+
+    <item
+        android:title="Diagnose"
+        android:icon="@drawable/diagnose_img"
+        android:id="@+id/botNavLab"
+        />
+    <item
+        android:title="Mappings"
+        android:icon="@drawable/mapping "
+        android:id="@+id/botNavMApp"
+        />
+    <item
+        android:title="Reports"
+        android:icon="@drawable/reports"
+        android:id="@+id/navReports"
+        />
+</menu>

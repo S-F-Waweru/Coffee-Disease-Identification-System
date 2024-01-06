@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/idRLBottomSheet"
+    android:background="@color/secondary_white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Farm Name"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/open_sans_semibold"
+        android:id="@+id/idTVFarmName"
+        android:padding="4dp"
+        android:layout_margin="4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Farm size"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/open_sans"
+        android:id="@+id/idTVFarmSize"
+        android:padding="4dp"
+        android:layout_margin="4dp"
+        android:layout_below="@id/idTVFarmName"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_below="@id/idTVFarmSize">
+        
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:text="Edit Farm Details  "
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:id="@+id/idBtnEdit"/>
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_margin="4dp"-->
+<!--            android:text="View Farm details"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:id="@+id/idBtnView"/>-->
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

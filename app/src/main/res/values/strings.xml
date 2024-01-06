@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">CoffeeDIASFP</string>
+    <string name="leaflogo">leafLogo</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="coffee_disease_identification_and_alert_system">Coffee Disease Identification and Alert System</string>
+    <string name="email">Email</string>
+    <string name="log_in">Log in</string>
+    <string name="password">Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="coffee_dias">Coffee D.I.A.S.</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_field_button" />
+    <string name="add_field">Add field</string>
+
+
+</resources>
