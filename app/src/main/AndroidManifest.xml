@@ -34,17 +34,13 @@
         <activity
             android:name=".EditFarmFieldActivity"
             android:exported="false" />
-        <activity
-            android:name=".AddFarmFieldActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FarmFields"
-            android:exported="false" />
+
+
         <activity
             android:name=".FarmForm"
             android:exported="false" />
         <activity
-            android:name=".Diseases"
+            android:name=".Disease"
             android:exported="false" />
         <activity
             android:name=".IdentifyDiseaseActivity"

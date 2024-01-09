@@ -64,10 +64,6 @@ public class FarmForm extends AppCompatActivity {
                      }
                  });
 
-
-
-
-//                 Toast.makeText(FarmForm.this, "Btn Clicked", Toast.LENGTH_SHORT).show();
              }
          });
 
