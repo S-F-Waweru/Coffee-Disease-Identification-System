@@ -14,6 +14,7 @@ public class FarmFieldModal implements Parcelable {
 
 
     public FarmFieldModal(){
+
     }
 
 
@@ -52,7 +53,7 @@ public class FarmFieldModal implements Parcelable {
         return farmName;
     }
     public void setFarmName(String farmName) {
-        farmName = farmName;
+        this.farmName = farmName;
     }
 
     public String getFarmSize() {
@@ -71,7 +72,7 @@ public class FarmFieldModal implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(farmName);
-        parcel.writeString(farmName);
+        parcel.writeString(farmSize);
         parcel.writeString(farmID);
     }
 }

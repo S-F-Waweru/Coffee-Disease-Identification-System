@@ -3,10 +3,12 @@ package com.example.coffeediasfp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,11 +59,19 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
         recommendationRVAdapter = new RecommendationRVAdapter(recommendationModalArrayList, this, this);
         progressBar = findViewById(R.id.PBrecommendationLoading);
 
+        recommendationsRV.setLayoutManager(new LinearLayoutManager(this));
+        recommendationsRV.setAdapter(recommendationRVAdapter);
+
+//        Log.e("Finding variable !", diseasesID);
+
 
 //load Disease
         loadDiseases();
 //        load reccimendations based on Disease named
-        getAllReccomendations();
+//        getAllReccomendations();
+
+//        getAllrecommendationForDisease(diseasesID);
+
 
         addRecommendation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +111,8 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
         for (DiseaseModal disease : diseaseList) {
             diseaseMap.put(disease.getDiseaseID(), disease.getDiseaseName());
         }
+//                Log.d("DiseaseMap", diseaseMap.toString());
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -115,49 +127,17 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
         diseaseSPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String diseaseDescription = new ArrayList<>(diseaseMap.keySet()).get(position);
-                diseasesID = getKeyFromValue(diseaseMap, diseaseDescription);
-            }
+                diseasesID = new ArrayList<>(diseaseMap.keySet()).get(position);
 
+                if(diseasesID != null){
+                    getAllrecommendationForDisease(diseasesID);
+                }else {
+                    Toast.makeText(Recommendation.this, "Failed.. to retrieve...null", Toast.LENGTH_SHORT).show();
+                }
+               
+            }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-    }
-
-    private void getAllReccomendations(){
-        recommendationModalArrayList.clear();
-
-        databaseReferenceRecommedations.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                progressBar.setVisibility(View.GONE);
-                recommendationModalArrayList.add(snapshot.getValue(RecommendationModal.class));
-                recommendationRVAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                progressBar.setVisibility(View.GONE);
-                recommendationRVAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
-                recommendationRVAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                progressBar.setVisibility(View.GONE);
-                recommendationRVAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Recommendation.this, "Failed..." + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,6 +151,30 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
             }
         }
         return null; // Handle this case based on your requirements
+    }
+
+
+
+    private void getAllrecommendationForDisease(String diseasesID){
+        recommendationModalArrayList.clear();
+        databaseReferenceRecommedations.orderByChild("diseaseID").equalTo(diseasesID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    RecommendationModal recommendationModal = dataSnapshot.getValue(RecommendationModal.class);
+                    recommendationModalArrayList.add(recommendationModal);
+                }
+//                notify the adapter that the data has changed
+                progressBar.setVisibility(View.GONE);
+                recommendationRVAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Recommendation.this, "Failed ... " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

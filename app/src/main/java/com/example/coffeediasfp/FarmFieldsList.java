@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -120,7 +121,7 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
 
     private void displayBottomSheet(FarmFieldModal farmFieldModal){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View layout = LayoutInflater.from(this).inflate(R.layout.farm_field_bottom_sheet_dialog, bottomSheetRL);
+        View layout = LayoutInflater.from(this).inflate(R.layout.farm_field_bottom_sheet_dialog, null);
         bottomSheetDialog.setContentView(layout);
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.setCanceledOnTouchOutside(true);
@@ -143,6 +144,7 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
                 Intent intent = new Intent(FarmFieldsList.this, EditFarmFieldActivity.class);
 //                pass the data the name shoudl be the same in the EditFarmFieldActiviy in the get intent method
                 intent.putExtra("farm", farmFieldModal);
+                Log.d("FarmFieldTag", "onClick: "+ farmFieldModal.getFarmSize());
                 startActivity(intent);
             }
         });

@@ -135,6 +135,7 @@ private void displayBottomSheet(DiseaseModal diseaseModal){
     TextView diseaseNameTV = layout.findViewById(R.id.idTVDiseaseDescription);
     TextView diseaseDescTV = layout.findViewById(R.id.idTVDiseaseDescription);
     Button diseaseBtn = layout.findViewById(R.id.idBtnEdit);
+
      diseaseNameTV.setText(diseaseModal.getDiseaseName());
      diseaseDescTV.setText(diseaseModal.getDiseaseDescription());
 

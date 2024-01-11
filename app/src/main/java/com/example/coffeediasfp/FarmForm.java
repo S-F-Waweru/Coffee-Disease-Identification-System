@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class FarmForm extends AppCompatActivity {
 //                         set id to farmID and then pass the modal class
                          databaseReference.child(farmID).setValue(farmFieldModal);
  //                         redirect to desired acivity
+                         startActivity(new Intent(FarmForm.this, FarmFieldsList.class));
+                         Toast.makeText(FarmForm.this, "Farm Added successfully", Toast.LENGTH_SHORT).show();
                      }
 
                      @Override

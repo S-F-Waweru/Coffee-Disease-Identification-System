@@ -37,7 +37,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
     @Override
     public void onBindViewHolder(@NonNull RecommendationRVAdapter.ViewHolder holder, int position) {
 //        setdata
-        RecommendationModal recommendationModal = new RecommendationModal();
+        RecommendationModal recommendationModal = recommendationModalArrayList.get(position);
         holder.recommendationTV.setText(recommendationModal.getRecommendationText());
 
 //         set Animation

@@ -1,6 +1,7 @@
 package com.example.coffeediasfp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class FarmFieldRVAdapter extends RecyclerView.Adapter<FarmFieldRVAdapter.
         this.farmFieldModalArrayList = farmFieldModalArrayList;
         this.context = context;
         this.farmFieldClickInterface = farmFieldClickInterface;
+
+//        Log.d("FarmFieldRVAdapter", "Context: " + context);
     }
 
     @NonNull
@@ -43,6 +46,8 @@ public class FarmFieldRVAdapter extends RecyclerView.Adapter<FarmFieldRVAdapter.
     public void onBindViewHolder(@NonNull FarmFieldRVAdapter.ViewHolder holder, int position) {
 //        setting up the data
         FarmFieldModal farmFieldModal = farmFieldModalArrayList.get(position);
+//        Log.d("FarmFieldRVAdapter", "Farm Name: " + farmFieldModal.getFarmName());
+
         holder.farmNameTV.setText(farmFieldModal.getFarmName());
         holder.farmSizeTV.setText(farmFieldModal.getFarmSize());
 //        set animation for item

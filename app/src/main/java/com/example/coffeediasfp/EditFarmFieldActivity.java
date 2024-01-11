@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class EditFarmFieldActivity extends AppCompatActivity {
          if(farmFieldModal != null){
              farmNameEdit.setText(farmFieldModal.getFarmName());
              farmSizeEdit.setText(farmFieldModal.getFarmSize());
+             Log.d("FArmSize", "onCreate:" +  farmFieldModal.getFarmSize());
              farmID = farmFieldModal.getFarmID();
          }
 

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,7 +60,7 @@ public class AddRecommendation extends AppCompatActivity {
                 recommendationID = UUID.randomUUID().toString();
 
                 RecommendationModal recommendationModal = new RecommendationModal(recommendationID, diseasesID, recommendationText);
-                recommendationModal.setCurrentTimestampAndDate();
+//                recommendationModal.setCurrentTimestampAndDate();
 
                 databaseReferenceRecommendation.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -113,11 +114,13 @@ public class AddRecommendation extends AppCompatActivity {
     }
 
     private void populateSpinner(List<DiseaseModal> diseaseList) {
+//        Log.d("PopulateSpinner", "Method called"); // Add this line for logging
         Map<String, String> diseaseMap = new HashMap<>();
 
         for (DiseaseModal disease : diseaseList) {
-            diseaseMap.put(disease.getDiseaseName(), disease.getDiseaseID());
+            diseaseMap.put( disease.getDiseaseName(), disease.getDiseaseID());
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -132,8 +135,11 @@ public class AddRecommendation extends AppCompatActivity {
         diseaseSPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-               String selectedDiseaseName = adapter.getItem(position);
+               String selectedDiseaseName = (String) adapterView.getItemAtPosition(position);
                diseasesID = diseaseMap.get(selectedDiseaseName);
+//                Log.d("DiseaseMap", diseaseMap.toString());
+//                Log.d("DiseaseID", diseaseMap.toString());
+
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.example.coffeediasfp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class DiseasesRVAdapter extends RecyclerView.Adapter<DiseasesRVAdapter.Vi
         this.diseaseModalArrayList = diseaseModalArrayList;
         this.context = context;
         this.diseaseClickInterface = diseaseClickInterface;
+
+
     }
 
     @NonNull
