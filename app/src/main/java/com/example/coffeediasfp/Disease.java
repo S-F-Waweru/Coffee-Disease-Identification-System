@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.UUID;
+
 public class Disease extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -46,7 +48,7 @@ public class Disease extends AppCompatActivity {
             public void onClick(View view) {
                 String diseaseNameText = diseaseNameTIET.getText().toString();
                 String diseaseDescText = diseasedDescTIET.getText().toString();
-                diseaseID = diseaseNameText;
+                diseaseID = UUID.randomUUID().toString();
 
                 DiseaseModal diseaseModal = new DiseaseModal(diseaseNameText, diseaseDescText, diseaseID);
 

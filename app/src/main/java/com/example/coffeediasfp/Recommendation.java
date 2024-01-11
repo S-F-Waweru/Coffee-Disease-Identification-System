@@ -51,7 +51,7 @@ public class Recommendation extends AppCompatActivity {
         addRecommendation = findViewById(R.id.addReccomendationFAB);
         recommendationsRV = findViewById(R.id.recommendationsRV);
         recommendationModalArrayList = new ArrayList<>();
-        progressBar.findViewById(R.id.PBDiseaseLoading);
+        progressBar.findViewById(R.id.PBrecommendationLoading);
 
 
 //load Disease
@@ -157,9 +157,6 @@ public class Recommendation extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 
     // Helper method to get the key (Disease ID) from a value (Disease name) in a Map
