@@ -10,6 +10,10 @@ public class DiseaseModal implements Parcelable {
    private String diseaseDescription;
    private String diseaseID;
 
+    public DiseaseModal() {
+
+    }
+
     public DiseaseModal(String diseaseName, String diseaseDescription, String diseaseID) {
         this.diseaseName = diseaseName;
         this.diseaseDescription = diseaseDescription;
