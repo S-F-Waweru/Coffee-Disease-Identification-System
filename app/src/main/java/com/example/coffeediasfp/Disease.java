@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -57,6 +58,8 @@ public class Disease extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         databaseReference.child(diseaseID).setValue(diseaseModal);
                         Toast.makeText(Disease.this, "Disease details added ...", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), DiseaseList.class));
+                        finish();
                     }
 
                     @Override

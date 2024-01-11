@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Recommendation extends AppCompatActivity {
+public class Recommendation extends AppCompatActivity implements RecommendationRVAdapter.RecommendationClickInterface {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReferenceDisease;
@@ -39,6 +39,8 @@ public class Recommendation extends AppCompatActivity {
 
     DatabaseReference databaseReferenceRecommedations;
 
+    private String recommendationID;
+
     private Spinner diseaseSPinner;
     private ArrayList<RecommendationModal>recommendationModalArrayList;
     private RecommendationRVAdapter recommendationRVAdapter;
@@ -48,10 +50,12 @@ public class Recommendation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReferenceRecommedations = firebaseDatabase.getReference("Recommendations");
         addRecommendation = findViewById(R.id.addReccomendationFAB);
         recommendationsRV = findViewById(R.id.recommendationsRV);
         recommendationModalArrayList = new ArrayList<>();
-        progressBar.findViewById(R.id.PBrecommendationLoading);
+        recommendationRVAdapter = new RecommendationRVAdapter(recommendationModalArrayList, this, this);
+        progressBar = findViewById(R.id.PBrecommendationLoading);
 
 
 //load Disease
@@ -170,5 +174,8 @@ public class Recommendation extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onRecommendationClick(int position) {
+        Toast.makeText(this, "cliked", Toast.LENGTH_SHORT).show();
+    }
 }

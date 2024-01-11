@@ -2,7 +2,9 @@ package com.example.coffeediasfp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,26 +12,32 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddRecommendation extends AppCompatActivity {
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReferenceDisease;
-    DatabaseReference databaseReferenceRecommendation;
-    private ArrayList<RecommendationModal>recommendationModalArrayList;
-    private RecommendationRVAdapter recommendationRVAdapter;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReferenceDisease;
+   private DatabaseReference databaseReferenceRecommendation;
+
+   private TextInputEditText recommendationTET;
+   private AppCompatButton addRecommendation;
+
 
     private Spinner diseaseSPinner;
+    private String recommendationID;
     String diseasesID;
 
     @Override
@@ -39,8 +47,40 @@ public class AddRecommendation extends AppCompatActivity {
 
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReferenceRecommendation = firebaseDatabase.getReference("Recommendation");
+        databaseReferenceRecommendation = firebaseDatabase.getReference("Recommendations");
+        recommendationTET = findViewById(R.id.idTVDiseseRecommendation);
+        addRecommendation = findViewById(R.id.btnAddRecommendation);
         loadDiseases();
+
+        addRecommendation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String recommendationText = recommendationTET.getText().toString();
+                recommendationID = UUID.randomUUID().toString();
+
+                RecommendationModal recommendationModal = new RecommendationModal(recommendationID, diseasesID, recommendationText);
+                recommendationModal.setCurrentTimestampAndDate();
+
+                databaseReferenceRecommendation.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        databaseReferenceRecommendation.child(recommendationID).setValue(recommendationModal);
+                        Toast.makeText(AddRecommendation.this, "Recommendation Added successfully", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(), Recommendation.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(AddRecommendation.this, "Failed ...." + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+//
 
 
 
@@ -76,12 +116,12 @@ public class AddRecommendation extends AppCompatActivity {
         Map<String, String> diseaseMap = new HashMap<>();
 
         for (DiseaseModal disease : diseaseList) {
-            diseaseMap.put(disease.getDiseaseID(), disease.getDiseaseName());
+            diseaseMap.put(disease.getDiseaseName(), disease.getDiseaseID());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
-                new ArrayList<>(diseaseMap.values())
+                new ArrayList<>(diseaseMap.keySet())
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -92,8 +132,8 @@ public class AddRecommendation extends AppCompatActivity {
         diseaseSPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String diseaseDescription = new ArrayList<>(diseaseMap.keySet()).get(position);
-                diseasesID = getKeyFromValue(diseaseMap, diseaseDescription);
+               String selectedDiseaseName = adapter.getItem(position);
+               diseasesID = diseaseMap.get(selectedDiseaseName);
             }
 
             @Override
