@@ -132,7 +132,7 @@ private void displayBottomSheet(DiseaseModal diseaseModal){
     bottomSheetDialog.setCanceledOnTouchOutside(true);
     bottomSheetDialog.show();
 
-    TextView diseaseNameTV = layout.findViewById(R.id.idTVDiseaseDescription);
+    TextView diseaseNameTV = layout.findViewById(R.id.idTVFDiseaseName);
     TextView diseaseDescTV = layout.findViewById(R.id.idTVDiseaseDescription);
     Button diseaseBtn = layout.findViewById(R.id.idBtnEdit);
 
