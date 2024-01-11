@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
 
         // create a list of  Cards
         ArrayList <CardModal> cardModalArrayList =  new ArrayList<>();
-        cardModalArrayList.add(new CardModal("Diseases", R.drawable.leaf, "Diseases", Disease.class));
+        cardModalArrayList.add(new CardModal("Diseases", R.drawable.leaf, "Diseases", DiseaseList.class));
         cardModalArrayList.add(new CardModal("Identify Disease", R.drawable.search, "Predict", IdentifyDiseaseActivity.class));
         cardModalArrayList.add(new CardModal("Farm Fields", R.drawable.farm, "All Fields", FarmFieldsList.class));
 
