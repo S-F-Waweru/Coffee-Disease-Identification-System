@@ -37,7 +37,7 @@ public class Disease extends AppCompatActivity {
         addDiseaseBtn = findViewById(R.id.btnAddDisease);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+        databaseReference = firebaseDatabase.getReference("Diseases");
 
 //        addbutton Event listener
 

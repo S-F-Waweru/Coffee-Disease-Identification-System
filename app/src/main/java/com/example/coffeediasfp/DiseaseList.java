@@ -55,7 +55,7 @@ public class DiseaseList extends AppCompatActivity implements DiseasesRVAdapter.
         loadingPB = findViewById(R.id.PBDiseaseLoading);
         addDiseaseFAB = findViewById(R.id.addDiseaseFAB);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+        databaseReference = firebaseDatabase.getReference("Diseases");
 
         diseaseModalArrayList = new ArrayList<>();
         diseasesRVAdapter = new DiseasesRVAdapter(diseaseModalArrayList, this, this);
