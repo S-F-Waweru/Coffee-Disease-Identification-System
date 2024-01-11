@@ -1,0 +1,5 @@
+0 Healthy
+1 Leaf Rust
+2 Phoma
+3 Miner
+4 Cerscopora 
