@@ -34,7 +34,7 @@
         android:layout_below="@id/idSpinnerDisease"
         android:padding="8sp"
         android:layout_marginTop="12dp"
-        android:id="@+id/RecommendationsRV"/>
+        android:id="@+id/recommendationsRV"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -53,9 +53,6 @@
         app:backgroundTint="@color/green"
         android:layout_margin="20dp"
         android:contentDescription="Add Disease REccomendation" />
-
-
-
 
 
 </RelativeLayout>

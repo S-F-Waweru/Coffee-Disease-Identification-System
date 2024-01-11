@@ -54,7 +54,7 @@ public class Disease extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         databaseReference.child(diseaseID).setValue(diseaseModal);
-                        Toast.makeText(Disease.this, "Farm details added ...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Disease.this, "Disease details added ...", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
