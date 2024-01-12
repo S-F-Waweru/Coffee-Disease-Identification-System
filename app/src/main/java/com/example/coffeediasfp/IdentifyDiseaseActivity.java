@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -25,10 +27,12 @@ import android.Manifest;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 
+import com.example.coffeediasfp.ml.CoffeeDiseaseModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -37,19 +41,33 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 public class IdentifyDiseaseActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PICK_IMAGE_REQUEST = 2;
+    int imageSize = 224;
 
     private ImageView imageView;
+
+//    Interpreter tflite = new Interpreter(loadModelFile)
     Button btnCapture;
     Button btnChoose;
 
     Button btnPredict;
 
+    TextView result;
+    TextView confidenceTV;
 
 //    Location Stuff
     FusedLocationProviderClient mFusedLocationClient;
@@ -72,19 +90,37 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         longitudeTextView = findViewById(R.id.lonTextView);
         latitudeTextView = findViewById(R.id.latTextView);
 
+        result = findViewById(R.id.diseaseResult);
+        confidenceTV = findViewById(R.id.confidencesTV);
+
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 //        capture the photo
         ActivityResultLauncher<Intent> captureLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),result->{
-                    if(result.getResultCode() == Activity.RESULT_OK ){
-                        // process the captured Photo
+                    if(result.getResultCode()   == Activity.RESULT_OK){
                         Bundle extras = result.getData().getExtras();
-                        if (extras != null){
-                            Bitmap imageBitmap = (Bitmap) extras.get("data");
-                            imageView.setImageBitmap(imageBitmap);
+                        if(extras != null){
+                            Bitmap image = (Bitmap) extras.get("data");
+//          center  crop the image to be square
+                            int dimension = Math.min(image.getWidth(), image.getHeight());
+                            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                            imageView.setImageBitmap(image);
+
+                            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+                            classifyImage(image);
                         }
+
                     }
+//                    if(result.getResultCode() == Activity.RESULT_OK ){
+//                        // process the captured Photo
+//                        Bundle extras = result.getData().getExtras();
+//                        if (extras != null){
+//                            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//                            imageView.setImageBitmap(imageBitmap);
+//                        }
+//                    }
 
                 });
 
@@ -97,8 +133,15 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 //                        process the chosen image from gallery
                         Uri selectedImageUri = result.getData().getData();
                         try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                            imageView.setImageBitmap(bitmap);
+                            Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+//                            image to be square
+                            int dimension = Math.min(image.getWidth(), image.getHeight());
+                            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                            imageView.setImageBitmap(image);
+
+                            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+                            classifyImage(image);
+//                            imageView.setImageBitmap(bitmap);
                         }catch(IOException e){
                             e.printStackTrace();
                         }
@@ -116,11 +159,21 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 //
 //                })
 //                Launch tha camera to capture a photo
-                Intent takePictureIntent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
-                captureLauncher.launch(takePictureIntent);
+                if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    captureLauncher.launch(takePictureIntent);
+//                    startActivityForResult(takePictureIntent, 1);
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+                }
+
+
+//                Intent takePictureIntent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
+//                captureLauncher.launch(takePictureIntent);
 //
             }
         });
+
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +181,9 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 //                Launch the gallery to chose an image
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 chooseLauncher.launch(galleryIntent);
+//                startActivityForResult(galleryIntent, 1);
             }
+
         });
 
      btnPredict.setOnClickListener(new View.OnClickListener() {
@@ -136,19 +191,95 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
           public void onClick(View view) {
 //              get location and display location-
               getLastLocation();
-//              get prediction
-//              save location
-//              save prediction
+//            Load the model
 
 
           }
       });
     }
 
+    //------------------------------------M . L . Stuff-----------------------------------------------
+
+
+    public void classifyImage(Bitmap image){
+        try {
+            CoffeeDiseaseModel model = CoffeeDiseaseModel.newInstance(getApplicationContext());
+
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize *   3);
+            byteBuffer.order(ByteOrder.nativeOrder());
+
+            int [] intValues = new int[imageSize * imageSize];
+            image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+            int pixel = 0;
+            for(int i = 0 ; i < imageSize ; i++){
+                for (int j= 0 ; j < imageSize ; j++){
+                    int val = intValues[pixel++]; // RGB
+//                    perfom biwise operatio to extract RGB
+                    byteBuffer.putFloat(((val >> 16) & 0xFF)* (1.f /255.f));
+                    byteBuffer.putFloat(((val >> 8) & 0xFF)* (1.f /255.f));
+                    byteBuffer.putFloat((val  & 0xFF)* (1.f /255.f));
+
+                }
+            }
+
+
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            CoffeeDiseaseModel.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+            float [] confidences = outputFeature0.getFloatArray();
+            int maxPos = 0;
+            float maxConfidence =  0 ;
+            for(int i = 0; i < confidences.length ; i++){
+                if(confidences[i] > maxConfidence){
+                    maxConfidence = confidences[i];
+                    maxPos = i;
+                }
+            }
+
+            String [] classes = {"Healthy", "Leaf Rust", "Phoma", "Miner", "Cerscopora"};
+
+            result.setText(classes[maxPos]);
+
+            String s  = " ";
+            for(int i = 0; i <classes.length; i++){
+                s += String.format("%s: %.2f%%\n", classes[i], confidences[i] * 100);
+            }
+
+            confidenceTV.setText(s);
+
+            // Releases model resources if no longer used.
+            model.close();
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }
+
+    }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode , @Nullable Intent data){
+//        if(requestCode == 1   && resultCode == RESULT_OK ){
+//            Bitmap image = (Bitmap) data.getExtras().get("data");
+////          center  crop the image to be square
+//            int dimension = Math.min(image.getWidth(), image.getHeight());
+//            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+//            imageView.setImageBitmap(image);
+//
+//            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+//            classifyImage(image);
+//        }
+//        super.onActivityResult(resultCode, resultCode, data);
+//    }
+//
 
 
 
-//  Location methods and stuffs
+//-----------------------------------  Location methods and stuff ----------------------------------------
 
     @SuppressLint("missingPermission")
     public void getLastLocation(){
@@ -252,4 +383,6 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
             getLastLocation();
         }
     }
+
+
 }

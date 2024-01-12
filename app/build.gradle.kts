@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.AaptOptions
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -27,9 +29,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    aaptOptions{
-        noCompress "tflite"
+    buildFeatures {
+        mlModelBinding = true
     }
+    fun AaptOptions.() {
+        noCompress += "tflite"
+    }
+ androidResources
 }
 
 dependencies {
@@ -41,6 +47,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
 
 
     testImplementation("junit:junit:4.13.2")
@@ -50,8 +58,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Tensorflow Lite dependencies
-    implementation 'org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2'
-    implementation 'com.google.android.gms:play-services-tflite-gpu:16.1.0'
+//    implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
+//    implementation("com.google.android.gms:play-services-tflite-gpu:16.1.0")
 
 
 }
