@@ -47,7 +47,7 @@ public class EditFarmFieldActivity extends AppCompatActivity {
          if(farmFieldModal != null){
              farmNameEdit.setText(farmFieldModal.getFarmName());
              farmSizeEdit.setText(farmFieldModal.getFarmSize());
-             Log.d("FArmSize", "onCreate:" +  farmFieldModal.getFarmSize());
+//             Log.d("FArmSize", "onCreate:" +  farmFieldModal.getFarmSize());
              farmID = farmFieldModal.getFarmID();
          }
 

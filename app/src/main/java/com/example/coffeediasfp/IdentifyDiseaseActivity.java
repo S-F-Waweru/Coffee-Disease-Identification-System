@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
@@ -20,18 +19,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import android.Manifest;
-
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
-
-
 import com.example.coffeediasfp.ml.CoffeeDiseaseModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -40,22 +34,18 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
+
 
 public class IdentifyDiseaseActivity extends AppCompatActivity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int PICK_IMAGE_REQUEST = 2;
     int imageSize = 224;
 
     private ImageView imageView;
@@ -64,7 +54,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
     Button btnCapture;
     Button btnChoose;
 
-    Button btnPredict;
+    AppCompatButton btnSave;
 
     TextView result;
     TextView confidenceTV;
@@ -72,7 +62,15 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 //    Location Stuff
     FusedLocationProviderClient mFusedLocationClient;
     TextView latitudeTextView , longitudeTextView;
+    String longitude, latitude;
     int PERMISSION_ID = 44;
+//   the string that will hold the disease with the  highest confidence
+    String diseaseName;
+    float maxConfidence =  0 ;
+
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReferenceDiagnosis;
 
 
 
@@ -86,15 +84,18 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         btnCapture = findViewById(R.id.btnCapture);
         btnChoose = findViewById(R.id.btnChoose);
-        btnPredict = findViewById(R.id.btnPredict);
+        btnSave = findViewById(R.id.btnSave);
         longitudeTextView = findViewById(R.id.lonTextView);
         latitudeTextView = findViewById(R.id.latTextView);
-
         result = findViewById(R.id.diseaseResult);
         confidenceTV = findViewById(R.id.confidencesTV);
 
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReferenceDiagnosis = firebaseDatabase.getReference("Diagnosis");
+
+
 
 //        capture the photo
         ActivityResultLauncher<Intent> captureLauncher = registerForActivityResult(
@@ -167,10 +168,6 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                 }
 
-
-//                Intent takePictureIntent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
-//                captureLauncher.launch(takePictureIntent);
-//
             }
         });
 
@@ -181,25 +178,33 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 //                Launch the gallery to chose an image
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 chooseLauncher.launch(galleryIntent);
+                getLastLocation();
 //                startActivityForResult(galleryIntent, 1);
             }
 
         });
 
-     btnPredict.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-//              get location and display location-
-              getLastLocation();
-//            Load the model
 
+        //-----------------------------------  save the Results in The Diagnosis Node----------------------------------------
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent  intent = new Intent(getApplicationContext(), Diagnosis.class);
+//                create a bundle with allthe data and send it
 
-          }
-      });
+                intent.putExtra("longitude",longitude );
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("diseaseName",diseaseName );
+                intent.putExtra("confidence", maxConfidence);
+                startActivity(intent);
+            }
+        });
     }
 
-    //------------------------------------M . L . Stuff-----------------------------------------------
 
+
+
+//-----------------------------------  Loading the model and classifying the image method ----------------------------------------
 
     public void classifyImage(Bitmap image){
         try {
@@ -216,7 +221,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
             for(int i = 0 ; i < imageSize ; i++){
                 for (int j= 0 ; j < imageSize ; j++){
                     int val = intValues[pixel++]; // RGB
-//                    perfom biwise operatio to extract RGB
+//                    perform bitwise operation to extract RGB
                     byteBuffer.putFloat(((val >> 16) & 0xFF)* (1.f /255.f));
                     byteBuffer.putFloat(((val >> 8) & 0xFF)* (1.f /255.f));
                     byteBuffer.putFloat((val  & 0xFF)* (1.f /255.f));
@@ -233,7 +238,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
             float [] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
-            float maxConfidence =  0 ;
+
             for(int i = 0; i < confidences.length ; i++){
                 if(confidences[i] > maxConfidence){
                     maxConfidence = confidences[i];
@@ -244,13 +249,17 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
             String [] classes = {"Healthy", "Leaf Rust", "Phoma", "Miner", "Cerscopora"};
 
             result.setText(classes[maxPos]);
+            diseaseName = classes[maxPos];
 
-            String s  = " ";
-            for(int i = 0; i <classes.length; i++){
-                s += String.format("%s: %.2f%%\n", classes[i], confidences[i] * 100);
+
+//            Create a hash map with disease name and confidences
+
+            StringBuilder s  = new StringBuilder(" ");
+            for(int i = 0; i < classes.length; i++){
+                s.append(String.format("%s: %.2f%%\n", classes[i], confidences[i] * 100));
             }
 
-            confidenceTV.setText(s);
+            confidenceTV.setText(s.toString());
 
             // Releases model resources if no longer used.
             model.close();
@@ -261,34 +270,16 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode , @Nullable Intent data){
-//        if(requestCode == 1   && resultCode == RESULT_OK ){
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-////          center  crop the image to be square
-//            int dimension = Math.min(image.getWidth(), image.getHeight());
-//            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-//            imageView.setImageBitmap(image);
-//
-//            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-//            classifyImage(image);
-//        }
-//        super.onActivityResult(resultCode, resultCode, data);
-//    }
-//
-
-
-
 //-----------------------------------  Location methods and stuff ----------------------------------------
 
     @SuppressLint("missingPermission")
     public void getLastLocation(){
-//        check if premissions are given
+//        check if permissions are given
 
         if(checkPermissions()){
 //            check if location is enabled
             if(isLocationEnabled()){
-                //get lastloaction
+                //get last location
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>(){
                     @Override
                     public void onComplete(@NonNull Task<Location> task){
@@ -296,8 +287,12 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                         if(location == null ){
                             requestNewLocationData();
                         }else{
-                            latitudeTextView.setText(location.getLatitude() + "");
-                            longitudeTextView.setText(location.getLongitude() + "");
+
+//                            the lat and long methods return a  double  add "" to tuen to string
+                            latitude = location.getLatitude() + "" ;
+                            longitude = location.getLongitude() + "" ;
+                            latitudeTextView.setText(latitude);
+                            longitudeTextView.setText(longitude);
 
                         }
                     }
@@ -318,7 +313,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
         @SuppressLint("missingPermission")
         public void requestNewLocationData(){
-//            initializing location Request object with appropriatemethods
+//            initializing location Request object with appropriate methods
             LocationRequest mLocationRequest = new LocationRequest()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(5000) // 5 seconds

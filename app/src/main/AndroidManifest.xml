@@ -17,6 +17,9 @@
         android:theme="@style/Theme.CoffeeDIASFP"
         tools:targetApi="31">
         <activity
+            android:name=".Diagnosis"
+            android:exported="false" />
+        <activity
             android:name=".AddRecommendation"
             android:exported="false" />
         <activity
@@ -34,8 +37,6 @@
         <activity
             android:name=".EditFarmFieldActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".FarmForm"
             android:exported="false" />

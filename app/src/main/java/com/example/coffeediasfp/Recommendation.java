@@ -143,16 +143,6 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
     }
 
 
-    // Helper method to get the key (Disease ID) from a value (Disease name) in a Map
-    private String getKeyFromValue(Map<String, String> map, String value) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return entry.getKey();
-            }
-        }
-        return null; // Handle this case based on your requirements
-    }
-
 
 
     private void getAllrecommendationForDisease(String diseasesID){
