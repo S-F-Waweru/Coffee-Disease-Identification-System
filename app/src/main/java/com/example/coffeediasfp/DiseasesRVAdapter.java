@@ -46,6 +46,8 @@ public class DiseasesRVAdapter extends RecyclerView.Adapter<DiseasesRVAdapter.Vi
         DiseaseModal diseaseModal = diseaseModalArrayList.get(position);
         holder.diseaseName.setText(diseaseModal.getDiseaseName());
 
+        holder.clearAnimation();
+
         setAnimation(holder.itemView, position);
 
 //        when the item is clicked
@@ -100,5 +102,8 @@ public class DiseasesRVAdapter extends RecyclerView.Adapter<DiseasesRVAdapter.Vi
             super(itemView);
             diseaseName = itemView.findViewById(R.id.idTVDiseaseName);
         }
+    public void clearAnimation() {
+        itemView.clearAnimation();
+    }
     }
 }

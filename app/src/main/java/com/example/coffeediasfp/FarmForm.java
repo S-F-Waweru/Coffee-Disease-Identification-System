@@ -57,6 +57,7 @@ public class FarmForm extends AppCompatActivity {
  //                         redirect to desired acivity
                          startActivity(new Intent(FarmForm.this, FarmFieldsList.class));
                          Toast.makeText(FarmForm.this, "Farm Added successfully", Toast.LENGTH_SHORT).show();
+                         finish();
                      }
 
                      @Override

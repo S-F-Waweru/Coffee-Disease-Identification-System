@@ -15,16 +15,28 @@ public class DiagnosisModal implements Parcelable {
     private String recommendations;
     private String longitude;
     private String latitude;
+    private String percentage;
+
+
 
     public DiagnosisModal (){}
 
-    public DiagnosisModal(String diagnosisID, String farmID, String diseaseID, String recommendations, String longitude, String latitude) {
+    public DiagnosisModal(String diagnosisID, String farmID, String diseaseID, String recommendations, String longitude, String latitude, String percentage) {
         this.diagnosisID = diagnosisID;
         this.farmID = farmID;
         this.diseaseID = diseaseID;
         this.recommendations = recommendations;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.percentage = percentage;
+    }
+
+    public String getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
     }
 
     protected DiagnosisModal(Parcel in) {
@@ -34,6 +46,7 @@ public class DiagnosisModal implements Parcelable {
         recommendations = in.readString();
         longitude = in.readString();
         latitude = in.readString();
+        percentage = in.readString();
     }
 
     public static final Creator<DiagnosisModal> CREATOR = new Creator<DiagnosisModal>() {
@@ -109,5 +122,6 @@ public class DiagnosisModal implements Parcelable {
         parcel.writeString(recommendations);
         parcel.writeString(longitude);
         parcel.writeString(latitude);
+        parcel.writeString(percentage);
     }
 }
