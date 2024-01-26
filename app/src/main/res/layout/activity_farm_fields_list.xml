@@ -6,11 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FarmFieldsList">
+    <TextView
+        android:id="@+id/Farms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12sp"
+        android:padding="8sp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="18sp"
+        android:textColor="@color/green"
+        android:elevation="4sp"
+        android:text="Farm List"
+        android:textAlignment="center"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/Farms"
         android:id="@+id/farmfieldRV"/>
 
     <ProgressBar

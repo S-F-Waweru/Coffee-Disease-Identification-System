@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowFarmsMapArea">
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/rounded_corner"
+        android:contentDescription="@string/close"
+        android:elevation="10dp"
+        android:src="@drawable/ic_back"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/back_btn"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:elevation="10dp"
+        android:background="@drawable/white_border">
+        <TextView
+            android:id="@+id/TVDeets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:text="Farm Name:"
+            android:fontFamily="@font/open_sans_semibold"/>
+
+        <TextView
+            android:id="@+id/editfarmName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Farm Name"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/TVDeets"
+            android:minHeight="48dp" />
+
+
+        <TextView
+            android:id="@+id/TVFSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/TVDeets"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="Farm size(Acres):"
+            android:fontFamily="@font/open_sans_semibold"/>
+
+        <TextView
+            android:id="@+id/editFarmSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editfarmName"
+            android:layout_toRightOf="@id/TVFSize"
+            android:textAlignment="center"
+            android:hint="Farm size(Acres):"
+            android:minHeight="48dp" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveFarmDetails"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="20dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_corner"
+        android:elevation="10dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="Save Farm Data"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/id_remove_marker"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/danger_btn"
+        android:elevation="10dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="Remove Marker"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="invisible" />
+
+
+</RelativeLayout>

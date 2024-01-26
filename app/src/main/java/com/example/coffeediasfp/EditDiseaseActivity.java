@@ -40,7 +40,7 @@ public class EditDiseaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_disease);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+        databaseReference = firebaseDatabase.getReference("Diseases");
         diseaseName  = findViewById(R.id.TIDiseasename);
         diseaseDesc = findViewById(R.id.TIDiseaseDesc);
 
@@ -68,10 +68,10 @@ public class EditDiseaseActivity extends AppCompatActivity {
                 map.put("diseasDesc ", diseaseDescText);
                 map.put("diseasID ", diseaseID);
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        databaseReference.updateChildren(map);
+                        databaseReference.child(diseaseID).updateChildren(map);
                         Toast.makeText(EditDiseaseActivity.this, "Disease details updated ..", Toast.LENGTH_SHORT).show();
 
                         Intent intent =new Intent(getApplicationContext(), DiseaseList.class);
@@ -82,16 +82,12 @@ public class EditDiseaseActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(EditDiseaseActivity.this, "Failed to update Disease details...", Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
-                deleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        deleteDisease();
-                    }
+                deleteBtn.setOnClickListener(view1 -> {
+                    deleteDisease();
                 });
 
 

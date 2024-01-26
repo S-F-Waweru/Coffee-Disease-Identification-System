@@ -3,6 +3,7 @@ import com.android.build.api.dsl.AaptOptions
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -49,6 +50,13 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.maps.android:maps-utils-ktx:5.0.0")
+    implementation ("com.google.code.gson:gson:2.9.0")
+
+
+
 
 
     testImplementation("junit:junit:4.13.2")

@@ -137,9 +137,6 @@ public class AddRecommendation extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                String selectedDiseaseName = (String) adapterView.getItemAtPosition(position);
                diseasesID = diseaseMap.get(selectedDiseaseName);
-//                Log.d("DiseaseMap", diseaseMap.toString());
-//                Log.d("DiseaseID", diseaseMap.toString());
-
             }
 
             @Override
@@ -148,12 +145,5 @@ public class AddRecommendation extends AppCompatActivity {
         });
     }
 
-    private String getKeyFromValue(Map<String, String> map, String value) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return entry.getKey();
-            }
-        }
-        return null; // Handle this case based on your requirements
-    }
+
 }

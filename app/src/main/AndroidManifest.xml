@@ -17,6 +17,29 @@
         android:theme="@style/Theme.CoffeeDIASFP"
         tools:targetApi="31">
         <activity
+            android:name=".ViewFarmLocationMap"
+            android:exported="false" />
+        <activity
+            android:name=".ShowFarmsMapArea"
+            android:exported="false" />
+        <activity
+            android:name=".SetFarmAreaMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChooseLocationMapActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB8hgaNQFmKC4YGraSNp4SQyTXlbxKfhSk" />
+
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditRecommendationActivity"
+            android:exported="false" />
+        <activity
             android:name=".DiagnosisList"
             android:exported="false" />
         <activity

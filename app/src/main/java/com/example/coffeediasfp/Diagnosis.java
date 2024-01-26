@@ -130,42 +130,7 @@ public class Diagnosis extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private void getRecomendationforDisease(String diseaseID){

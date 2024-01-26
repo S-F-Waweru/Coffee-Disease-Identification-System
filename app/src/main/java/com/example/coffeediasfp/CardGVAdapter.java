@@ -50,6 +50,7 @@ public class CardGVAdapter  extends ArrayAdapter <CardModal> {
             holder.cardIV.setImageResource(cardModal.getImgid());
             holder.cardBT.setText(cardModal.getButton_name());
 
+
 //            Set onclicklistener for the button
             holder.cardBT.setOnClickListener(view -> {
                 //handle buttuon click here

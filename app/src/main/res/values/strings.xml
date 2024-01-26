@@ -17,5 +17,8 @@
     <string name="add_field_button" />
     <string name="add_field">Add field</string>
 
+    <string name="GOOGLE_MAPS_API">AIzaSyADAodB7x0NzgCXGviCxUXPKmx16P0F0dk</string>
+    <string name="Add_location" />
+
 
 </resources>

@@ -75,12 +75,10 @@ public class EditFarmFieldActivity extends AppCompatActivity {
 
 
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        class loading progessbar
-
-//                        updatign the farm datails
+                        databaseReference.child(farmID).updateChildren(map);
                         databaseReference.updateChildren(map);
                         Toast.makeText(EditFarmFieldActivity.this, "Farm details updated ..", Toast.LENGTH_SHORT).show();
 
@@ -93,19 +91,16 @@ public class EditFarmFieldActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(EditFarmFieldActivity.this, "Failed to update Farm details...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditFarmFieldActivity.this, "Farm details  failed to updated ..", Toast.LENGTH_SHORT).show();
                     }
                 });
 
             }
         });
 
-        deleteFarmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteFarm();
-                Toast.makeText(EditFarmFieldActivity.this, "Delete complete...", Toast.LENGTH_SHORT).show();
-            }
+        deleteFarmBtn.setOnClickListener(view -> {
+            deleteFarm();
+            Toast.makeText(EditFarmFieldActivity.this, "Delete complete...", Toast.LENGTH_SHORT).show();
         });
 
 

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import android.Manifest;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
@@ -50,14 +52,17 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
     private ImageView imageView;
 
-//    Interpreter tflite = new Interpreter(loadModelFile)
     Button btnCapture;
     Button btnChoose;
+
+    Button btnPreciseLocation;
+    Button btnChooseLocation;
 
     AppCompatButton btnSave;
 
     TextView result;
     TextView confidenceTV;
+
 
 //    Location Stuff
     FusedLocationProviderClient mFusedLocationClient;
@@ -85,6 +90,8 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         btnCapture = findViewById(R.id.btnCapture);
         btnChoose = findViewById(R.id.btnChoose);
         btnSave = findViewById(R.id.btnSave);
+        btnChooseLocation = findViewById(R.id.id_choose_location);
+        btnPreciseLocation =findViewById(R.id.id_device_location);
         longitudeTextView = findViewById(R.id.lonTextView);
         latitudeTextView = findViewById(R.id.latTextView);
         result = findViewById(R.id.diseaseResult);
@@ -114,14 +121,6 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                         }
 
                     }
-//                    if(result.getResultCode() == Activity.RESULT_OK ){
-//                        // process the captured Photo
-//                        Bundle extras = result.getData().getExtras();
-//                        if (extras != null){
-//                            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//                            imageView.setImageBitmap(imageBitmap);
-//                        }
-//                    }
 
                 });
 
@@ -153,13 +152,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-// check permission
-//                if (ContextCompat.checkSelfPermission((getApplicationContext()), CAMERA) == = PackageManager.PERMISSION_GRANTED) {
-//                    Intent takePictureIntent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
-//                    captureLauncher.launch(takePictureIntent);
-//
-//                })
-//                Launch tha camera to capture a photo
+//                getLastLocation();
                 if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     captureLauncher.launch(takePictureIntent);
@@ -175,31 +168,84 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                get the coordinates
 //                Launch the gallery to chose an image
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 chooseLauncher.launch(galleryIntent);
-                getLastLocation();
-//                startActivityForResult(galleryIntent, 1);
+
             }
 
         });
 
 
-        //-----------------------------------  save the Results in The Diagnosis Node----------------------------------------
+        //-----------------------------------  send the Results in The Diagnosis Axctivity----------------------------------------
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent  intent = new Intent(getApplicationContext(), Diagnosis.class);
+                if (!longitude.isEmpty() && !latitude.isEmpty() && !diseaseName.isEmpty()){
+                    Intent  intent = new Intent(getApplicationContext(), Diagnosis.class);
 //                create a bundle with allthe data and send it
+                    intent.putExtra("longitude",longitude );
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("diseaseName",diseaseName );
+                    intent.putExtra("confidence", maxConfidence);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(IdentifyDiseaseActivity.this, "you must classifiy and Image and select locations", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-                intent.putExtra("longitude",longitude );
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("diseaseName",diseaseName );
-                intent.putExtra("confidence", maxConfidence);
-                startActivity(intent);
+
+        btnPreciseLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkPermissions()) {
+                    getLastLocation();
+                }
+            }
+        });
+
+        btnChooseLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String TAG = "Choose";
+                Log.d(TAG, "onClick: diseaseName" + diseaseName);
+                if (!(diseaseName == null)){
+
+                    Intent i= new Intent(getApplicationContext(), ChooseLocationMapActivity.class);
+                    startActivityForResult(i, 12345);
+//                    requestPermissions();
+//                    Intent intent = new Intent(getApplicationContext(), ChooseLocationMapActivity.class);
+//                    intent.putExtra("diseaseName",diseaseName );
+//                    intent.putExtra("confidence", maxConfidence);
+//                    startActivity(intent);
+                }else {
+                    Toast.makeText(IdentifyDiseaseActivity.this, "Classify image First  before choosing a Location", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
+
+    //    ------------------------------------ Receiving LatLng From Choose location Activity -------------------------------------------
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 12345 && resultCode == Activity.RESULT_OK){
+            String lat = data.getStringExtra("latitude");
+            String lng = data.getStringExtra("longitude");
+            latitude = lat;
+            longitude = lng;
+            latitudeTextView.setText(latitude);
+            longitudeTextView.setText(longitude);
+            Toast.makeText(this, "Choosen location set", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 
 
@@ -225,11 +271,8 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                     byteBuffer.putFloat(((val >> 16) & 0xFF)* (1.f /255.f));
                     byteBuffer.putFloat(((val >> 8) & 0xFF)* (1.f /255.f));
                     byteBuffer.putFloat((val  & 0xFF)* (1.f /255.f));
-
                 }
             }
-
-
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
@@ -293,7 +336,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                             longitude = location.getLongitude() + "" ;
                             latitudeTextView.setText(latitude);
                             longitudeTextView.setText(longitude);
-
+                            Toast.makeText(IdentifyDiseaseActivity.this, "Device location set.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -337,7 +380,9 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
     // method to check for permissions
     private boolean checkPermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         // If we want background location
         // on Android 10.0 and higher,
@@ -358,26 +403,5 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-
-    // If everything is alright then
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_ID) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
-            }
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (checkPermissions()) {
-            getLastLocation();
-        }
-    }
-
 
 }

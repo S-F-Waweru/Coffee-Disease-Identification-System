@@ -60,18 +60,10 @@ public class DiagnosisRVAdapter extends RecyclerView.Adapter<DiagnosisRVAdapter.
         position = holder.getAdapterPosition();
         DiagnosisModal diagnosisModal = diagnosisModalArrayList.get(position);
 
-//        holder.diseaseNameTv.setText(diagnosisModal.getDiseaseID());
-//        holder.famrNameTV.setText(diagnosisModal.getFarmID());
-//        holder.percentage.setText(diagnosisModal.getPercentage());
-
-
-
-        //Log.d("Array Size", String.valueOf(diagnosisModalArrayList.size()));
 
             fetchDiagnosisData(diagnosisModal.getDiseaseID(), diagnosisModal.getFarmID(), new DataLoadCallBack() {
                 @Override
                 public void onDataLoaded(String farmName, String diseaseName) {
-
                         // Fetch data if not cached
                         fetchDiagnosisData(diagnosisModal.getDiseaseID(), diagnosisModal.getFarmID(), new DataLoadCallBack() {
                             @Override

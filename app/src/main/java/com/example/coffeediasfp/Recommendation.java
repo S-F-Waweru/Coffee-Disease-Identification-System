@@ -1,23 +1,24 @@
 package com.example.coffeediasfp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +40,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
     ProgressBar progressBar;
     RecyclerView recommendationsRV;
 
-    DatabaseReference databaseReferenceRecommedations;
+    DatabaseReference databaseReferenceRecommendation;
 
     private String recommendationID;
 
@@ -52,7 +53,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReferenceRecommedations = firebaseDatabase.getReference("Recommendations");
+        databaseReferenceRecommendation = firebaseDatabase.getReference("Recommendations");
         addRecommendation = findViewById(R.id.addReccomendationFAB);
         recommendationsRV = findViewById(R.id.recommendationsRV);
         recommendationModalArrayList = new ArrayList<>();
@@ -67,7 +68,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
 
 //load Disease
         loadDiseases();
-//        load reccimendations based on Disease named
+//        load reccomendations based on Disease named
 //        getAllReccomendations();
 
 //        getAllrecommendationForDisease(diseasesID);
@@ -147,7 +148,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
 
     private void getAllrecommendationForDisease(String diseasesID){
         recommendationModalArrayList.clear();
-        databaseReferenceRecommedations.orderByChild("diseaseID").equalTo(diseasesID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceRecommendation.orderByChild("diseaseID").equalTo(diseasesID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -167,9 +168,34 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
 
     }
 
+    private void displayBottomSheet(RecommendationModal recommendationModal){
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View layout = LayoutInflater.from(this).inflate(R.layout.recommendation_bottom_sheet_dialog, null);
+
+        bottomSheetDialog.setContentView(layout);
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.show();
+
+
+        TextView recommendation =layout.findViewById(R.id.idTVRecommendationDescription);
+        Button editBtn = findViewById(R.id.idBtnEdit);
+
+        recommendation.setText(recommendationModal.getRecommendationText());
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EditRecommendationActivity.class);
+                intent.putExtra("disease", recommendationModal);
+                startActivity(intent);
+            }
+        });
+
+    }
+
 
     @Override
     public void onRecommendationClick(int position) {
-        Toast.makeText(this, "cliked", Toast.LENGTH_SHORT).show();
+       displayBottomSheet(recommendationModalArrayList.get(position));
     }
 }
