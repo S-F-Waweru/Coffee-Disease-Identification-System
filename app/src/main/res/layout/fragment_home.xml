@@ -37,12 +37,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="684dp"
                 android:layout_marginTop="75dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
-                android:horizontalSpacing="6dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:horizontalSpacing="12dp"
                 android:numColumns="2"
                 android:textAlignment="center"
-                android:verticalSpacing="6dp" />
+                android:verticalSpacing="18dp" />
 
 
         </FrameLayout>

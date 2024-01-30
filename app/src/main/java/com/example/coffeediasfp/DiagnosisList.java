@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ public class DiagnosisList extends AppCompatActivity {
     ProgressBar loadingProgress;
     ArrayList<DiagnosisModal> diagnosisModalArrayList;
     DiagnosisRVAdapter diagnosisRVAdapter;
+    ImageButton diseaseMap;
+
 
 
     @Override
@@ -47,11 +51,21 @@ public class DiagnosisList extends AppCompatActivity {
         databaseReferenceDiagnosis = firebaseDatabase.getReference("Diagnosis");
         farmSpinner = findViewById(R.id.idFarmSpinner);
         loadingProgress = findViewById(R.id.loadingProgress);
+        diseaseMap = findViewById(R.id.showDiseaseMap);
         diagnosisModalArrayList  = new ArrayList<>();
         diagnosisRV = findViewById(R.id.diagnosisRV);
 
         diagnosisRVAdapter = new DiagnosisRVAdapter(diagnosisModalArrayList, this);
         diagnosisRV.setLayoutManager(new LinearLayoutManager(this));
+
+        diseaseMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DiseaseHeatmapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 

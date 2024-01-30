@@ -20,16 +20,29 @@
         android:textAlignment="center"
         />
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_below="@id/TVDiagnosis"
+        android:elevation="10dp"
         android:padding="8sp"
         android:id="@+id/idFarmSpinner"/>
+  <ImageButton
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:id="@+id/showDiseaseMap"
+      android:elevation="10dp"
+      android:background="@drawable/white_border"
+      android:layout_marginRight="20dp"
+      android:src="@drawable/ic_disease_map"
+      android:layout_below="@id/TVDiagnosis"
+      android:layout_marginLeft="20dp"
+      android:layout_toRightOf="@id/idFarmSpinner"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/diagnosisRV"
         android:layout_width="match_parent"
         android:layout_below="@id/idFarmSpinner"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content" />
 
     <ProgressBar

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
 
     AppCompatButton saveFarmDetails;
 
-    TextView editFarmName, editFarmSize;
+    EditText editFarmName, editFarmSize;
     ArrayList<LatLng> receivedMarkers;
 
     Gson gson;
@@ -101,7 +102,6 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-
     private void drawPolygon(ArrayList<LatLng> receivedMarkers) {
         polygonOptions = new PolygonOptions();
         for (LatLng latLng : receivedMarkers) {
@@ -115,6 +115,7 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
         polygonOptions.clickable(true);
         mMap.addPolygon(polygonOptions);
     }
+
     private void moveCamera(LatLng latLng) {
         Log.d(TAG, "moveCamera: Moving Camera to :lat :" + latLng.latitude + ", lng : " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
@@ -149,7 +150,7 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View view) {
                 FarmFieldModal finalFarmDetails = new FarmFieldModal(farmName, farmSize,farmID,coordinatesJSON);
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("farms");
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Farms");
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -157,7 +158,9 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
                         databaseReference.child(farmID).setValue(finalFarmDetails);
                         Toast.makeText(ShowFarmsMapArea.this, "Farm details saved", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onDataChange: Saved"+ finalFarmDetails.describeContents());
-
+                        Intent intent = new Intent(getApplicationContext(), FarmFieldsList.class);
+                        startActivity(intent);
+                        finish();
                     }
 
                     @Override

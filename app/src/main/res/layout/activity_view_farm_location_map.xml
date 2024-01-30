@@ -43,11 +43,13 @@
             android:text="Farm Name:"
             android:fontFamily="@font/open_sans_semibold"/>
 
-        <EditText
+        <TextView
             android:id="@+id/editfarmName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Farm Name"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/TVDeets"
             android:minHeight="48dp" />
 
@@ -63,21 +65,21 @@
             android:text="Farm size(Acres):"
             android:fontFamily="@font/open_sans_semibold"/>
 
-        <EditText
+        <TextView
             android:id="@+id/editFarmSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editfarmName"
             android:layout_toRightOf="@id/TVFSize"
             android:hint="20"
+
+            android:layout_marginLeft="10dp"
             android:minHeight="48dp" />
-
-
     </RelativeLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveFarmDetails"
+        android:id="@+id/editfarmDetails"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -89,30 +91,8 @@
         android:background="@drawable/rounded_corner"
         android:elevation="10dp"
         android:fontFamily="@font/open_sans_bold"
-        android:text="Save Farm Data"
+        android:text="Edit Farm details"
         android:textColor="@color/white"
         android:textSize="15sp"
         />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/id_remove_marker"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/danger_btn"
-        android:elevation="10dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Remove Marker"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="invisible" />
-
-
 </RelativeLayout>

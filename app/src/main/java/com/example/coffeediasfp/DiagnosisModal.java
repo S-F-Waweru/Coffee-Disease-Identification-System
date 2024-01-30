@@ -13,21 +13,31 @@ public class DiagnosisModal implements Parcelable {
     private String farmID;
     private String diseaseID;
     private String recommendations;
-    private String longitude;
-    private String latitude;
+//    private String longitude;
+//    private String latitude;
     private String percentage;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    private String location;
 
 
 
     public DiagnosisModal (){}
 
-    public DiagnosisModal(String diagnosisID, String farmID, String diseaseID, String recommendations, String longitude, String latitude, String percentage) {
+    public DiagnosisModal(String diagnosisID, String farmID, String diseaseID, String recommendations, String location, String percentage) {
         this.diagnosisID = diagnosisID;
         this.farmID = farmID;
         this.diseaseID = diseaseID;
         this.recommendations = recommendations;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.location = location;
+//        this.latitude = latitude;
         this.percentage = percentage;
     }
 
@@ -44,8 +54,9 @@ public class DiagnosisModal implements Parcelable {
         farmID = in.readString();
         diseaseID = in.readString();
         recommendations = in.readString();
-        longitude = in.readString();
-        latitude = in.readString();
+        location = in.readString();
+//        longitude = in.readString();
+//        latitude = in.readString();
         percentage = in.readString();
     }
 
@@ -92,22 +103,22 @@ public class DiagnosisModal implements Parcelable {
     public void setFarmID(String farmID) {
         this.farmID = farmID;
     }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
+//
+//    public String getLongitude() {
+//        return longitude;
+//    }
+//
+//    public void setLongitude(String longitude) {
+//        this.longitude = longitude;
+//    }
+//
+//    public String getLatitude() {
+//        return latitude;
+//    }
+//
+//    public void setLatitude(String latitude) {
+//        this.latitude = latitude;
+//    }
 
     @Override
     public int describeContents() {
@@ -120,8 +131,10 @@ public class DiagnosisModal implements Parcelable {
         parcel.writeString(farmID);
         parcel.writeString(diseaseID);
         parcel.writeString(recommendations);
-        parcel.writeString(longitude);
-        parcel.writeString(latitude);
+        parcel.writeString(location);
+
+//        parcel.writeString(longitude);
+//        parcel.writeString(latitude);
         parcel.writeString(percentage);
     }
 }

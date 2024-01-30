@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/leaflogo"
-            android:src="@drawable/leaf"
+            android:src="@drawable/ic_launcher_leaf_dias_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

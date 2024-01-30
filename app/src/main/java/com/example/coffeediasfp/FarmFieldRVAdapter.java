@@ -1,17 +1,25 @@
 package com.example.coffeediasfp;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.w3c.dom.Text;
 
@@ -69,6 +77,40 @@ public class FarmFieldRVAdapter extends RecyclerView.Adapter<FarmFieldRVAdapter.
         });
 
 
+//         check if location is set
+        if (farmFieldModal.isLocationSet()){
+            holder.addLocation.setVisibility(View.GONE);
+            holder.viewLocation.setVisibility(View.VISIBLE);
+            holder.viewLocation.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    Log.d("ViewButtin", "onClick: The button is clicked");
+                    Toast.makeText(context, "View Btn Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ViewFarmLocationMap.class);
+                    intent.putExtra("farmModal",farmFieldModal);
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+//               holder.viewLocation.setVisibility(convertView.GONE);
+            holder.addLocation.setVisibility(View.VISIBLE);
+            holder.viewLocation.setVisibility(View.GONE);
+            holder.addLocation.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    Log.d("ViewButtin", "onClick: The button is clicked");
+                    Toast.makeText(context, "add Btn Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, SetFarmAreaMapActivity.class);
+                    intent.putExtra("farmModal",farmFieldModal);
+                    context.startActivity(intent);
+                }
+            });
+        }
+
+
     }
 
     @Override
@@ -82,10 +124,15 @@ public class FarmFieldRVAdapter extends RecyclerView.Adapter<FarmFieldRVAdapter.
 
         private TextView farmNameTV, farmSizeTV;
 
+        ImageButton addLocation;
+        ImageButton viewLocation;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             farmNameTV = itemView.findViewById(R.id.idTVfarmName);
             farmSizeTV = itemView.findViewById(R.id.idTVFarmSize);
+            addLocation = itemView.findViewById(R.id.addLocation);
+            viewLocation = itemView.findViewById(R.id.viewLocation);
 
         }
     }
@@ -104,6 +151,19 @@ public class FarmFieldRVAdapter extends RecyclerView.Adapter<FarmFieldRVAdapter.
             lastPos = position;
         }
 
+    }
+
+    public  boolean isServiceOK(){
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
+        if(available == ConnectionResult.SUCCESS){
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog((Activity) context, available, 9001);
+            dialog.show();
+        }else {
+            Toast.makeText(context, "You can't make map requests", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
 }

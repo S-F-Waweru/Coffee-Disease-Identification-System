@@ -52,12 +52,21 @@ public class CardGVAdapter  extends ArrayAdapter <CardModal> {
 
 
 //            Set onclicklistener for the button
-            holder.cardBT.setOnClickListener(view -> {
-                //handle buttuon click here
+//            holder.cardBT.setOnClickListener(view -> {
+//                //handle buttuon click here
+//                Context context = getContext();
+//                Intent intent = new Intent(context, cardModal.getTargetActivity());
+//                context.startActivity(intent);
+//            });
+            holder.cardBT.setVisibility(View.GONE);
+            convertView.setOnClickListener(view -> {
                 Context context = getContext();
                 Intent intent = new Intent(context, cardModal.getTargetActivity());
                 context.startActivity(intent);
+
             });
+
+
         }
 
 

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class AddRecommendation extends AppCompatActivity {
+public class  AddRecommendation extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReferenceDisease;

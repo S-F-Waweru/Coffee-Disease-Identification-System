@@ -43,15 +43,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:id="@+id/idBtnEdit"/>
-<!--        <Button-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_margin="4dp"-->
-<!--            android:text="View Farm details"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:id="@+id/idBtnView"/>-->
 
     </LinearLayout>
 

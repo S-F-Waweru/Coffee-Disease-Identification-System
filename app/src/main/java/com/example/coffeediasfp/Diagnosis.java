@@ -14,11 +14,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,6 +79,11 @@ public class Diagnosis extends AppCompatActivity {
 
         latitude = getIntent().getStringExtra("latitude");
         longitude = getIntent().getStringExtra("longitude");
+
+
+
+
+
         diseaseName = getIntent().getStringExtra("diseaseName");
         diseaseConfidence = getIntent().getFloatExtra("confidence", 100) * 100;
 
@@ -107,8 +114,15 @@ public class Diagnosis extends AppCompatActivity {
                 String diseaseIDTExt = diseaseID;
                 String recommendationText = String.valueOf(recommendations);
                 String percentageText = diseaseConfidence + "% ";
+                LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
-                DiagnosisModal diagnosisModal = new DiagnosisModal(diagnosisID, farmidText, diseaseIDTExt, recommendationText, longitude, latitude,percentageText);
+                Gson gson = new Gson();
+
+                String location = gson.toJson(latLng);
+
+                DiagnosisModal diagnosisModal = new DiagnosisModal(diagnosisID, farmidText,diseaseIDTExt,recommendationText, location,percentageText  );
+
+//                DiagnosisModal diagnosisModal = new DiagnosisModal(diagnosisID, farmidText, diseaseIDTExt, recommendationText, longitude, latitude,percentageText);
 //                longitude, latitude
 //
 //                add the Strings to the modal
