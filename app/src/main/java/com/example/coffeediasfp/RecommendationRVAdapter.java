@@ -42,15 +42,15 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
 
 //         set Animation
         setAnimation(holder.itemView, position);
-//holder.itemView.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View view) {
-//        int adapterPosition = holder.getAdapterPosition();
-//        if(adapterPosition != RecyclerView.NO_POSITION){
-//            recommendationClickInterface.onRecommendationClick(adapterPosition);
-//        }
-//    }
-//});
+holder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        int adapterPosition = holder.getAdapterPosition();
+        if(adapterPosition != RecyclerView.NO_POSITION){
+            recommendationClickInterface.onRecommendationClick(adapterPosition);
+        }
+    }
+});
     }
 
     @Override

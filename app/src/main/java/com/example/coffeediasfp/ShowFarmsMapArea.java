@@ -121,7 +121,6 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
     }
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;

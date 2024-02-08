@@ -146,6 +146,7 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
                 intent.putExtra("farm", farmFieldModal);
                 Log.d("FarmFieldTag", "onClick: "+ farmFieldModal.getFarmSize());
                 startActivity(intent);
+                finish();
             }
         });
 

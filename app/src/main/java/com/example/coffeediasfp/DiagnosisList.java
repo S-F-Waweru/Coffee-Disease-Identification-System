@@ -2,6 +2,7 @@ package com.example.coffeediasfp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +41,7 @@ public class DiagnosisList extends AppCompatActivity {
     ArrayList<DiagnosisModal> diagnosisModalArrayList;
     DiagnosisRVAdapter diagnosisRVAdapter;
     ImageButton diseaseMap;
+    FloatingActionButton addDiagnosis;
 
 
 
@@ -54,9 +57,16 @@ public class DiagnosisList extends AppCompatActivity {
         diseaseMap = findViewById(R.id.showDiseaseMap);
         diagnosisModalArrayList  = new ArrayList<>();
         diagnosisRV = findViewById(R.id.diagnosisRV);
+        addDiagnosis = findViewById(R.id.addDiseaseFAB);
 
         diagnosisRVAdapter = new DiagnosisRVAdapter(diagnosisModalArrayList, this);
         diagnosisRV.setLayoutManager(new LinearLayoutManager(this));
+
+        addDiagnosis.setOnClickListener(view -> {
+            Intent i = new Intent(getApplicationContext(),IdentifyDiseaseActivity.class);
+            startActivity(i);
+            finish();
+        });
 
         diseaseMap.setOnClickListener(new View.OnClickListener() {
             @Override

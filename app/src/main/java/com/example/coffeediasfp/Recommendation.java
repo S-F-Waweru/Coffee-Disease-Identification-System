@@ -1,5 +1,7 @@
 package com.example.coffeediasfp;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -133,6 +136,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
                 if(diseasesID != null){
                     getAllrecommendationForDisease(diseasesID);
                 }else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Recommendation.this, "Failed.. to retrieve...null", Toast.LENGTH_SHORT).show();
                 }
                
@@ -179,15 +183,17 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
 
 
         TextView recommendation =layout.findViewById(R.id.idTVRecommendationDescription);
-        Button editBtn = findViewById(R.id.idBtnEdit);
+        Button editBtn = layout.findViewById(R.id.idBtnEditRecommendation);
 
         recommendation.setText(recommendationModal.getRecommendationText());
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EditRecommendationActivity.class);
-                intent.putExtra("disease", recommendationModal);
+                intent.putExtra("recommendation", recommendationModal);
+                Log.d(TAG, "onClick: " + recommendationModal.getRecommendationText());
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -196,6 +202,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
 
     @Override
     public void onRecommendationClick(int position) {
+        Log.d(TAG, "onRecommendationClick: " + "RV Clicked");
        displayBottomSheet(recommendationModalArrayList.get(position));
     }
 }

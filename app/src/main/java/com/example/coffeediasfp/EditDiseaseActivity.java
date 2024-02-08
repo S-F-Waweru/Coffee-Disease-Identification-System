@@ -64,9 +64,9 @@ public class EditDiseaseActivity extends AppCompatActivity {
                 String diseaseDescText = diseaseDesc.getText().toString();
 
                 Map<String, Object> map = new HashMap<>();
-                map.put("diseasName ", diseaseNameText);
-                map.put("diseasDesc ", diseaseDescText);
-                map.put("diseasID ", diseaseID);
+                map.put("diseaseName", diseaseNameText);
+                map.put("diseaseDescription", diseaseDescText);
+                map.put("diseaseID", diseaseID);
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -82,13 +82,13 @@ public class EditDiseaseActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        deleteBtn.setOnClickListener(view1 -> {
+                            deleteDisease();
+                        });
                     }
                 });
 
-                deleteBtn.setOnClickListener(view1 -> {
-                    deleteDisease();
-                });
+
 
 
             }

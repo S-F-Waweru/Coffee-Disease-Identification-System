@@ -57,6 +57,7 @@ public class FarmForm extends AppCompatActivity {
                  Intent intent = new Intent(getApplicationContext(), SetFarmAreaMapActivity.class);
                  intent.putExtra( "farmModal",farmFieldModal );
                  startActivity(intent);
+
              }
          });
 

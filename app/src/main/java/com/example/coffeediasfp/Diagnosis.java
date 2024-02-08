@@ -3,6 +3,7 @@ package com.example.coffeediasfp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -132,8 +133,8 @@ public class Diagnosis extends AppCompatActivity {
                     databaseReferenceDiagnosis.child(diagnosisID).setValue(diagnosisModal);
                     //redirect to the DIagnisis list
                         Toast.makeText(Diagnosis.this, "Record added successfully" + diseaseID, Toast.LENGTH_SHORT).show();
-
-
+                        startActivity(new Intent(getApplicationContext(), DiagnosisList.class));
+                        finish();
                     }
 
                     @Override

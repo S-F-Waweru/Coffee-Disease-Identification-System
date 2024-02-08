@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
 
-    //        check if the user is signed in
+    //  check if the user is signed in
     @Override
     public void onStart(){
         super.onStart();
@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
 //            open the main activity
-            Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent  = new Intent(getApplicationContext(), UserDetails .class);
             startActivity(intent);
             finish();
 

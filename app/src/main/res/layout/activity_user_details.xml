@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".UserDetails"
+    android:layout_centerInParent="true">
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_back"
+        android:background="@drawable/rouded_corner_brown"
+        android:elevation="4dp"
+        android:id="@+id/back_btn"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Complete Farmer Profile"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:elevation="4sp"
+        android:fontFamily="@font/open_sans_bold"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="30sp"
+        />
+    <!--    Email-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:boxStrokeColor="@color/green"
+        app:boxStrokeWidth="1dp"
+        app:endIconMode="clear_text"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userfullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/open_sans"
+            android:hint=" FullName"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    Password-->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:boxStrokeColor="@color/green"
+        app:boxStrokeWidth="1dp"
+        app:endIconMode="clear_text"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="@color/black"
+        android:layout_marginTop="12sp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userphonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/open_sans"
+            android:hint="Phone Number"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/green" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="28dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text=" Farmer"
+            android:layout_marginStart="40dp"
+            android:id="@+id/isFarmerchecbox"/>
+
+        <CheckBox
+            android:id="@+id/isAgroOwnerchecbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="87dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="40dp"
+            android:checked="false"
+            android:text="Agrovet Owner" />
+
+
+    </RelativeLayout>
+    
+
+
+
+
+    <!--    Confirm password-->
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:backgroundTint="@color/white"-->
+    <!--        app:boxStrokeColor="@color/green"-->
+    <!--        app:boxStrokeWidth="1dp"-->
+    <!--        app:endIconMode="clear_text"-->
+    <!--        app:hintAnimationEnabled="true"-->
+    <!--        app:hintTextColor="@color/green"-->
+    <!--        android:layout_marginTop="12sp"-->
+    <!--        >-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/userConfPasswordView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            android:fontFamily="@font/open_sans"-->
+    <!--            android:hint="Confirm Password"-->
+    <!--            android:inputType="text"-->
+    <!--            android:paddingStart="10dp"-->
+    <!--            android:paddingEnd="10dp"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:textColorHint="@color/black" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="367dp"
+        android:layout_height="196dp"
+        android:layout_marginTop="48sp"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/progress_circular_reg"
+            android:layout_width="33dp"
+            android:layout_height="34dp"
+            android:layout_margin="4sp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatRegisterButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveFarmerProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rounded_corner"
+            android:elevation="4sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:padding="12sp"
+            android:paddingStart="24sp"
+            android:paddingTop="12sp"
+            android:paddingEnd="24sp"
+            android:paddingBottom="12sp"
+            android:text="Save Profile"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

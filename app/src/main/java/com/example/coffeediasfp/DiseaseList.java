@@ -145,6 +145,7 @@ private void displayBottomSheet(DiseaseModal diseaseModal){
              Intent intent = new Intent(DiseaseList.this, EditDiseaseActivity.class);
              intent.putExtra("disease", diseaseModal);
              startActivity(intent);
+             finish();
          }
      });
 

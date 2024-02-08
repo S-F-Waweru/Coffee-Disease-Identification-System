@@ -123,31 +123,33 @@
         >
 
         <TextView
+            android:id="@+id/MapTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:id="@+id/MapTV"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="26dp"
             android:fontFamily="@font/open_sans"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"
             android:text="Add Farm location"
+            android:textAlignment="center"
             android:textColor="@color/green" />
 
         <ImageButton
             android:id="@+id/ic_gps"
-            android:layout_width="48dp"
+            android:layout_width="54dp"
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="158dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="21dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginRight="10dp"
-            android:layout_toEndOf="@id/MapTV"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_corner"
             android:contentDescription="@string/add_field"
-            android:scaleType="centerCrop"
             android:src="@drawable/ic_addloaction"
             tools:ignore="TouchTargetSizeCheck" />
 

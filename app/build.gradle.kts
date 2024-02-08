@@ -69,5 +69,8 @@ dependencies {
 //    implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
 //    implementation("com.google.android.gms:play-services-tflite-gpu:16.1.0")
 
+    //firestore
+    implementation("com.google.firebase:firebase-firestore:24.10.1")
+
 
 }

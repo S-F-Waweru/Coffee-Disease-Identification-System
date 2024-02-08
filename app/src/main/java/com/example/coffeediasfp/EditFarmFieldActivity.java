@@ -79,7 +79,7 @@ public class EditFarmFieldActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         databaseReference.child(farmID).updateChildren(map);
-                        databaseReference.updateChildren(map);
+//                        databaseReference.updateChildren(map);
                         Toast.makeText(EditFarmFieldActivity.this, "Farm details updated ..", Toast.LENGTH_SHORT).show();
 
 //                       should be  redirected to the recycler view
@@ -91,7 +91,7 @@ public class EditFarmFieldActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(EditFarmFieldActivity.this, "Farm details  failed to updated ..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditFarmFieldActivity.this, "Farm details  failed to be updated ..", Toast.LENGTH_SHORT).show();
                     }
                 });
 

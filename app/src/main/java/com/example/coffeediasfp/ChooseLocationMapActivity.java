@@ -123,7 +123,7 @@ public class ChooseLocationMapActivity extends AppCompatActivity implements OnMa
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(ChooseLocationMapActivity.this, "Found Location!!", Toast.LENGTH_SHORT).show();
-                            Location currentLocation = (Location) task.getResult();
+                            Location currentLocation = task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
 
                         } else {

@@ -28,6 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
+
+import com.example.coffeediasfp.ml.CoffeeDiseaseIdentificationModel;
 import com.example.coffeediasfp.ml.CoffeeDiseaseModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -149,83 +151,68 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                 }
         );
 
-        btnCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnCapture.setOnClickListener(view -> {
 //                getLastLocation();
-                if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    captureLauncher.launch(takePictureIntent);
+            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureLauncher.launch(takePictureIntent);
 //                    startActivityForResult(takePictureIntent, 1);
-                }else{
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
-                }
-
+            }else{
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
             }
+
         });
 
 
-        btnChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnChoose.setOnClickListener(view -> {
 //                get the coordinates
 //                Launch the gallery to chose an image
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                chooseLauncher.launch(galleryIntent);
-
-            }
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            chooseLauncher.launch(galleryIntent);
 
         });
 
 
         //-----------------------------------  send the Results in The Diagnosis Axctivity----------------------------------------
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!longitude.isEmpty() && !latitude.isEmpty() && !diseaseName.isEmpty()){
-                    Intent  intent = new Intent(getApplicationContext(), Diagnosis.class);
+        btnSave.setOnClickListener(view -> {
+            if (!longitude.isEmpty() && !latitude.isEmpty() && !diseaseName.isEmpty()){
+                Intent  intent = new Intent(getApplicationContext(), Diagnosis.class);
 //                create a bundle with allthe data and send it
-                    intent.putExtra("longitude",longitude );
-                    intent.putExtra("latitude", latitude);
-                    intent.putExtra("diseaseName",diseaseName );
-                    intent.putExtra("confidence", maxConfidence);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(IdentifyDiseaseActivity.this, "you must classifiy and Image and select locations", Toast.LENGTH_SHORT).show();
-                }
+                intent.putExtra("longitude",longitude );
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("diseaseName",diseaseName );
+                intent.putExtra("confidence", maxConfidence);
+                startActivity(intent);
+                finish();
+            }else {
+                Toast.makeText(IdentifyDiseaseActivity.this, "you must classifiy and Image and select locations", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        btnPreciseLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkPermissions()) {
-                    getLastLocation();
-                }
+        btnPreciseLocation.setOnClickListener(view -> {
+            if (checkPermissions()) {
+                getLastLocation();
             }
         });
 
-        btnChooseLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnChooseLocation.setOnClickListener(view -> {
 
-                String TAG = "Choose";
-                Log.d(TAG, "onClick: diseaseName" + diseaseName);
-                if (!(diseaseName == null)){
+            String TAG = "Choose";
+            Log.d(TAG, "onClick: diseaseName" + diseaseName);
+            if (!(diseaseName == null)){
 
-                    Intent i= new Intent(getApplicationContext(), ChooseLocationMapActivity.class);
-                    startActivityForResult(i, 12345);
+                Intent i= new Intent(getApplicationContext(), ChooseLocationMapActivity.class);
+                startActivityForResult(i, 12345);
 //                    requestPermissions();
 //                    Intent intent = new Intent(getApplicationContext(), ChooseLocationMapActivity.class);
 //                    intent.putExtra("diseaseName",diseaseName );
 //                    intent.putExtra("confidence", maxConfidence);
 //                    startActivity(intent);
-                }else {
-                    Toast.makeText(IdentifyDiseaseActivity.this, "Classify image First  before choosing a Location", Toast.LENGTH_SHORT).show();
-                }
-
+            }else {
+                Toast.makeText(IdentifyDiseaseActivity.this, "Classify image First  before choosing a Location", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
@@ -254,7 +241,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
     public void classifyImage(Bitmap image){
         try {
-            CoffeeDiseaseModel model = CoffeeDiseaseModel.newInstance(getApplicationContext());
+            CoffeeDiseaseIdentificationModel model = CoffeeDiseaseIdentificationModel.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -276,7 +263,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            CoffeeDiseaseModel.Outputs outputs = model.process(inputFeature0);
+            CoffeeDiseaseIdentificationModel.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float [] confidences = outputFeature0.getFloatArray();
@@ -289,7 +276,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                 }
             }
 
-            String [] classes = {"Healthy", "Leaf Rust", "Phoma", "Miner", "Cerscopora"};
+            String [] classes = {"Healthy", "Miner", "Cerscospora", "Phoma", "Null"};
 
             result.setText(classes[maxPos]);
             diseaseName = classes[maxPos];
@@ -302,7 +289,20 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
                 s.append(String.format("%s: %.2f%%\n", classes[i], confidences[i] * 100));
             }
 
-            confidenceTV.setText(s.toString());
+
+            if((classes[maxPos].equals("Null"))){
+                    // do Something;
+                confidenceTV.setText("Result is null ,The model cannot classify the image.\n \n" +
+                        "Please capture or Choose  a better photo.");
+
+                btnSave.setVisibility(View.GONE);
+            }else{
+                confidenceTV.setText(s.toString());
+                btnSave.setVisibility(View.VISIBLE);
+
+            }
+
+
 
             // Releases model resources if no longer used.
             model.close();

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:padding="24dp"
     android:layout_height="match_parent">
 
 
@@ -30,10 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="4dp"
-            android:text="Edit Disease  "
+            android:layout_marginHorizontal="24dp"
+            android:text="Edit Recommendation  "
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:id="@+id/idBtnEdit"/>
+            android:id="@+id/idBtnEditRecommendation"/>
 
 
     </LinearLayout>

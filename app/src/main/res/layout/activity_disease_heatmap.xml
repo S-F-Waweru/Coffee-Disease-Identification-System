@@ -13,7 +13,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_corner"
         android:contentDescription="@string/close"
         android:elevation="10dp"
@@ -23,49 +23,62 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_below="@id/back_btn"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/back_btn"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         android:elevation="10dp"
-        android:background="@drawable/white_border"
         android:id="@+id/relLayout1">
 
         <Spinner
             android:id="@+id/idFarmSpinner"
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="48dp"
+            android:elevation="4dp"
             android:layout_alignParentStart="true"
             android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="16dp"
             android:layout_marginStart="12dp"
-            android:background="@color/darker_white"
+            android:background="@drawable/spinner_background" />
             />
 
         <Spinner
-            android:id="@+id/diseaseSpinner"
+            android:id="@+id/DiseaseSpinner"
             android:layout_width="160dp"
             android:layout_height="48dp"
+            android:elevation="4dp"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="16dp"
             android:layout_marginStart="12dp"
-            android:layout_marginLeft="86dp"
             android:layout_marginEnd="12dp"
-            android:layout_toRightOf="@id/idFarmSpinner"
-            android:background="@color/darker_white" />
+            android:layout_toEndOf="@id/idFarmSpinner"
+            android:background="@drawable/spinner_background" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/DiseaseSpinner"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/ic_all_diseases"
+            android:elevation="4dp"
+            android:src="@drawable/ic_view_all"/>
 
     </RelativeLayout>
 
 
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 
 </RelativeLayout>
