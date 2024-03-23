@@ -1,5 +1,7 @@
 package com.example.coffeediasfp;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,6 +9,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,13 +36,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-//            open the main activity
-            Intent intent  = new Intent(getApplicationContext(), UserDetails .class);
-            startActivity(intent);
-            finish();
-
-        }
+//        if(currentUser != null){
+////            open the main activity
+//            Intent intent  = new Intent(getApplicationContext(), UserDetails .class);
+//            startActivity(intent);
+//            finish();
+//
+//        }
 
     }
 
@@ -114,7 +117,8 @@ public class RegisterActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }else{
-                            Toast.makeText(RegisterActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Authentication Failed" +  task.getResult(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onComplete: " + task.getResult());
                         }
                     }
                 });
@@ -122,4 +126,5 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+//    public  void getuser detai
 }

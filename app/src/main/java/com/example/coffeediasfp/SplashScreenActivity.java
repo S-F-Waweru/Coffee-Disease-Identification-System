@@ -16,6 +16,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     Animation anim;
     ImageView imageView;
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,17 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
-                    startActivity(new Intent(SplashScreenActivity.this, RegisterActivity.class));
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if(currentUser != null){
+//            open the main activity
+                    Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                     finish();
-
+                }else{
+                    Intent intent  = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override

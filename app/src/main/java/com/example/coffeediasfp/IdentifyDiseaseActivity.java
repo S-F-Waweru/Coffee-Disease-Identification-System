@@ -1,5 +1,6 @@
 package com.example.coffeediasfp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,7 +31,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 
 import com.example.coffeediasfp.ml.CoffeeDiseaseIdentificationModel;
-import com.example.coffeediasfp.ml.CoffeeDiseaseModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -43,6 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -78,6 +79,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReferenceDiagnosis;
+    DatabaseReference notificationCount;
 
 
 
@@ -103,6 +105,7 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceDiagnosis = firebaseDatabase.getReference("Diagnosis");
+//        notificationCount = firebaseDatabase.getReference("NotificationCount").child(farmID).child(diseaseid);
 
 
 
@@ -233,13 +236,10 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
 //-----------------------------------  Loading the model and classifying the image method ----------------------------------------
 
     public void classifyImage(Bitmap image){
+        confidenceTV.setText(" ");
         try {
             CoffeeDiseaseIdentificationModel model = CoffeeDiseaseIdentificationModel.newInstance(getApplicationContext());
 
@@ -403,5 +403,6 @@ public class IdentifyDiseaseActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
 
 }

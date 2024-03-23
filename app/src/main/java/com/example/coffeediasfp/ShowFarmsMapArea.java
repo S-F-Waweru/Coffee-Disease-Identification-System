@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +60,33 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
 
     Gson gson;
     String coordinatesJSON;
+
+    String userId, email;
+
+    private FirebaseDatabase firebaseDatabase;
+
+    private DatabaseReference databaseReference ,farmRef;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user ;
+
+    public void onStart(){
+        super.onStart();
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            userId = user.getUid();
+            email = user.getEmail();
+            //        database stuff
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("AllFarms").child(userId).child("Farms");
+            databaseReference.setValue(true);
+        }else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 
@@ -149,7 +178,9 @@ public class ShowFarmsMapArea extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View view) {
                 FarmFieldModal finalFarmDetails = new FarmFieldModal(farmName, farmSize,farmID,coordinatesJSON);
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Farms");
+
+                //
+//                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Farms");
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override

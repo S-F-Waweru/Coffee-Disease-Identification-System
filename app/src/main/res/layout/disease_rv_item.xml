@@ -4,14 +4,16 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    app:cardCornerRadius="4dp"
-    android:background="@color/secondary_white"
-    android:layout_margin="4dp"
-    android:elevation="4dp">
+    app:cardCornerRadius="6dp"
+    android:layout_margin="6dp"
+    android:focusableInTouchMode="true"
+
+    android:elevation="10dp">
+
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/secondary_white"/>
+     >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,5 +29,16 @@
             android:padding="16dp"
             android:id="@+id/idTVDiseaseName"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Read more"
+            android:layout_below="@id/idTVDiseaseName"
+            android:textAlignment="center"
+            android:paddingVertical="16dp"
+            android:background="@color/backgroundWhite"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/black"></TextView>
 
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

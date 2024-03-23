@@ -2,32 +2,39 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    >
+    app:cardElevation="8dp"
+
+    app:cardCornerRadius="12dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:elevation="4dp"
         android:background="@color/white"
+        android:paddingBottom="12dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/idFarmNameRV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/open_sans_light"
+                android:textColor="@color/black"
+                android:fontFamily="@font/open_sans"
                 android:text="FarmName"
                 android:textSize="14sp" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
 
             <TextView
                 android:id="@+id/idDiseaseNameRV"
@@ -37,17 +44,28 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 android:padding="4dp"
                 android:text="DiseaseName" />
+
             <TextView
                 android:id="@+id/idPercentageRV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:fontFamily="@font/open_sans"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
-                android:padding="4dp"
-                android:text="percentage" />
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/text_pill"
+                android:elevation="1dp"
+                android:fontFamily="@font/open_sans"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="percentage"
+                android:textAlignment="center"
+                android:textSize="8sp" />
         </RelativeLayout>
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

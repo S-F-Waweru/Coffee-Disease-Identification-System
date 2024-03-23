@@ -16,9 +16,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,18 +39,45 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
     private ArrayList<FarmFieldModal>  farmFieldModalArrayList;
     private RelativeLayout bottomSheetRL;
     private FarmFieldRVAdapter farmFieldRVAdapter;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    String userId, email;
 
+    public void onStart(){
+        super.onStart();
+
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            userId = user.getUid();
+            email = user.getEmail();
+            //        database stuff
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("AllFarms").child(userId).child("Farms");
+//            databaseReference.setValue(true);
+            getAllFields();
+        }else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farm_fields_list);
 
+
+
+
         fieldsRV = findViewById(R.id.farmfieldRV);
         loadingPB = findViewById(R.id.PBLoading);
         FABtn = findViewById(R.id.FABtn);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Farms" );
+
+
+
+
         farmFieldModalArrayList = new ArrayList<>();
 //        bottomSheetRL = (RelativeLayout) findViewById(R.id.idRLBottomSheet);
         farmFieldRVAdapter = new FarmFieldRVAdapter(farmFieldModalArrayList, this, this);
@@ -56,7 +86,7 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
         fieldsRV.setLayoutManager(new LinearLayoutManager(this));
         fieldsRV.setAdapter(farmFieldRVAdapter);
 
-        getAllFields();
+
 
         FABtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +115,10 @@ public class FarmFieldsList extends AppCompatActivity  implements FarmFieldRVAda
                 farmFieldModalArrayList.add(snapshot.getValue(FarmFieldModal.class));
 //                notify adapter that data has changed
                 farmFieldRVAdapter.notifyDataSetChanged();
+                if(farmFieldModalArrayList.isEmpty()){
+                    loadingPB.setVisibility(View.GONE);
+                    Toast.makeText(FarmFieldsList.this, "The list is Empty", Toast.LENGTH_SHORT).show();
+                }
 
             }
 

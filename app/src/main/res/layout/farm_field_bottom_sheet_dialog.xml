@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/idRLBottomSheet"
-    android:background="@color/secondary_white">
+    android:layout_marginHorizontal="8dp"
+    android:elevation="4sp"
+   >
 
     <TextView
         android:layout_width="match_parent"
@@ -45,7 +47,4 @@
             android:id="@+id/idBtnEdit"/>
 
     </LinearLayout>
-
-
-
 </RelativeLayout>

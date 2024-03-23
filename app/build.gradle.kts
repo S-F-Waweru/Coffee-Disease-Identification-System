@@ -55,8 +55,20 @@ dependencies {
     implementation ("com.google.maps.android:maps-utils-ktx:5.0.0")
     implementation ("com.google.code.gson:gson:2.9.0")
 
+//    implementation("com.example.group:activation:1.0.0")
+//    implementation("com.example.group:additional:2.2.1")
+//    implementation("com.example.group:mail:3.1.4")
 
 
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+//    implementation("com.github.PhilJay:MPAndroidChart:v3.0.3")
+
+
+
+//    implementation("androidx.core:core-ktx:2.2.0")
+
+//    implementation ("androidx.core:core:2.2.0")
 
 
     testImplementation("junit:junit:4.13.2")
@@ -65,12 +77,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // Tensorflow Lite dependencies
-//    implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
-//    implementation("com.google.android.gms:play-services-tflite-gpu:16.1.0")
-
-    //firestore
-    implementation("com.google.firebase:firebase-firestore:24.10.1")
-
-
 }
+

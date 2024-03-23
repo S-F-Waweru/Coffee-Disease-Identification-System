@@ -92,33 +92,33 @@
             android:textColor="@color/black"
             android:textColorHint="@color/green" />
     </com.google.android.material.textfield.TextInputLayout>
-<!--    Confirm password-->
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:backgroundTint="@color/white"-->
-<!--        app:boxStrokeColor="@color/green"-->
-<!--        app:boxStrokeWidth="1dp"-->
-<!--        app:endIconMode="clear_text"-->
-<!--        app:hintAnimationEnabled="true"-->
-<!--        app:hintTextColor="@color/green"-->
-<!--        android:layout_marginTop="12sp"-->
-<!--        >-->
+    Confirm password
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:boxStrokeColor="@color/green"
+        app:boxStrokeWidth="1dp"
+        app:endIconMode="clear_text"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="@color/green"
+        android:layout_marginTop="12sp"
+        >
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/userConfPasswordView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:fontFamily="@font/open_sans"-->
-<!--            android:hint="Confirm Password"-->
-<!--            android:inputType="text"-->
-<!--            android:paddingStart="10dp"-->
-<!--            android:paddingEnd="10dp"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textColorHint="@color/black" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userConfPasswordView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/open_sans"
+            android:hint="Confirm Password"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,6 +165,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.357"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundWhite"
+    android:padding="10dp"
     tools:context=".DiseaseList">
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back"
+        android:background="@drawable/rouded_corner_brown"
+        android:elevation="4dp"
+        android:id="@+id/back_btn"/>
+
     <TextView
         android:id="@+id/TVdisease"
         android:layout_width="match_parent"
@@ -12,8 +22,9 @@
         android:layout_marginBottom="12sp"
         android:padding="8sp"
         android:fontFamily="@font/open_sans_semibold"
-        android:textSize="18sp"
-        android:textColor="@color/green"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/back_btn"
         android:elevation="4sp"
         android:text="Diseases"
         android:textAlignment="center"
@@ -23,14 +34,15 @@
         android:id="@+id/diseaseRV"
         android:layout_width="match_parent"
         android:layout_below="@id/TVdisease"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
     <ProgressBar
+        android:id="@+id/PBDiseaseLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:id="@+id/PBDiseaseLoading"/>
+        android:indeterminate="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addDiseaseFAB"

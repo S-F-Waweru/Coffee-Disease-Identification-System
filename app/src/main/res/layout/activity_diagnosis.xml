@@ -3,126 +3,143 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbarStyle="outsideInset"
     tools:context=".Diagnosis">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:textAlignment="center"
-        android:layout_marginHorizontal="8dp"
-        >
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="8dp"
+            app:menu="@menu/toolbar_menu">
+
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:elevation="2dp"
+                android:src="@drawable/leaf" />
+        </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:id="@+id/TVdisease"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12sp"
-            android:padding="8sp"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="18sp"
-            android:textColor="@color/green"
             android:elevation="4sp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="8sp"
             android:text="Diagnosis"
             android:textAlignment="center"
-            />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
 
         <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-
             android:id="@+id/idFarmSpinner"
-            android:layout_marginVertical="16dp"
-            />
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_height="48dp"
+            android:layout_marginVertical="16dp" />
+
         <ProgressBar
+            android:id="@+id/idDiagnosisProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:indeterminate="true"
-            android:id="@+id/idDiagnosisProgressBar"
-            />
+            android:indeterminate="true" />
 
-     <androidx.cardview.widget.CardView
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:id="@+id/card"
-         app:cardElevation="4dp"
-         >
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardElevation="4dp">
 
-             <TextView
-                 android:id="@+id/diseaseName"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentStart="true"
-                 android:layout_marginStart="16dp"
-                 android:layout_marginTop="4dp"
-                 android:layout_marginEnd="4dp"
-                 android:layout_marginBottom="4dp"
-                 android:fontFamily="@font/open_sans_semibold"
-                 android:padding="8sp"
-                 android:text="Disease Name" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp">
 
-             <TextView
-                 android:id="@+id/confidencesTV"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentEnd="true"
-                 android:layout_marginStart="4dp"
-                 android:layout_marginTop="4dp"
-                 android:layout_marginEnd="16dp"
-                 android:layout_marginBottom="4dp"
-                 android:fontFamily="@font/open_sans"
-                 android:padding="8sp"
-                 android:text="Disease Confidence" />
+                <TextView
+                    android:id="@+id/diseaseName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:padding="8sp"
+                    android:text="Disease Name" />
 
-             <TextView
-                 android:id="@+id/RecomendationHR"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentStart="true"
-                 android:layout_marginStart="16dp"
-                 android:layout_marginTop="4dp"
-                 android:layout_below="@id/diseaseName"
-                 android:layout_marginEnd="4dp"
-                 android:layout_marginBottom="4dp"
-                 android:fontFamily="@font/open_sans_semibold"
-                 android:padding="8sp"
-                 android:text="Recommendations:" />
-             <RelativeLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@id/RecomendationHR">
+                <TextView
+                    android:id="@+id/confidencesTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="8sp"
+                    android:text="Disease Confidence" />
 
-                 <TextView
+                <TextView
+                    android:id="@+id/RecomendationHR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/diseaseName"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:padding="8sp"
+                    android:text="Recommendations:" />
 
-                     android:id="@+id/recommendationText"
-                     android:layout_width="322dp"
-                     android:layout_height="wrap_content"
-                     android:layout_alignParentStart="true"
-                     android:layout_alignParentEnd="true"
-                     android:layout_marginStart="16dp"
-                     android:layout_marginTop="4dp"
-                     android:layout_marginEnd="16dp"
-                     android:layout_marginBottom="4dp"
-                     android:fontFamily="@font/open_sans"
-                     android:padding="8sp"
-                     android:text="Disease Recomendations" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RecomendationHR">
 
+                    <TextView
 
-             </RelativeLayout>
+                        android:id="@+id/recommendationText"
+                        android:layout_width="322dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="8sp"
+                        android:text="Disease Recomendations" />
 
 
-         </RelativeLayout>
+                </RelativeLayout>
 
 
-     </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
 
             <Button
                 android:id="@+id/idAddDiagnosis"
@@ -134,15 +151,22 @@
                 android:layout_marginVertical="16sp"
                 android:layout_marginStart="61dp"
                 android:layout_marginEnd="61dp"
+                android:background="@drawable/rounded_corner"
                 android:backgroundTint="@color/green"
                 android:elevation="4dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="Save Diagnosis"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
         </RelativeLayout>
 
-
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/secondary_white"
+            android:elevation="4sp"
+            app:menu="@menu/bottom_nav"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
     </LinearLayout>

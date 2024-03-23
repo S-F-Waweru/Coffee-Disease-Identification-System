@@ -38,11 +38,14 @@ public class User {
     public User(){
     }
 
-    public User(String userId, String email, String fullName, String phoneNumber) {
+    public User(String userId, String email, String fullName, String phoneNumber, Boolean isFarmer, Boolean isAgrovetOwner, Boolean isAdmin) {
         this.userId = userId;
         this.email = email;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
+        this.isFarmer = isFarmer;
+        this.IsAgrovetOwner = isAgrovetOwner;
+        this.IsAdmin = isAdmin;
     }
 
     public String getUserId() {

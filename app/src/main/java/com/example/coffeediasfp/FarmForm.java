@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,29 @@ public class FarmForm extends AppCompatActivity {
     private String farmID;
     ImageButton mMAp;
 
+    String userId, email;
+
+    FirebaseAuth mAuth;
+    FirebaseUser user ;
+    public void onStart(){
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            userId = user.getUid();
+            email = user.getEmail();
+            //        database stuff
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("AllFarms").child(userId).child("Farms");
+//            databaseReference.setValue(true);
+        }else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +64,6 @@ public class FarmForm extends AppCompatActivity {
         farmName = findViewById(R.id.TIFfarmname);
         farmSize = findViewById(R.id.TIFfarmsize);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Farms");
-
-
-
          addField = findViewById(R.id.btnAddField);
          mMAp = findViewById(R.id.ic_gps);
          mMAp.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +74,7 @@ public class FarmForm extends AppCompatActivity {
                  farmID = UUID.randomUUID().toString();
                  FarmFieldModal farmFieldModal = new FarmFieldModal(farmname, farmsize, farmID);
 
-                 Log.d("SentFieled", "onClick: Fieled Modal" + farmFieldModal.getFarmName().toString());
+                 Log.d("Sent Fieled", "onClick: Fieled Modal" + farmFieldModal.getFarmName().toString());
                  Intent intent = new Intent(getApplicationContext(), SetFarmAreaMapActivity.class);
                  intent.putExtra( "farmModal",farmFieldModal );
                  startActivity(intent);
@@ -75,9 +96,7 @@ public class FarmForm extends AppCompatActivity {
                  databaseReference.addValueEventListener(new ValueEventListener() {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                         set id to farmID and then pass the modal class
                          databaseReference.child(farmID).setValue(farmFieldModal);
- //                         redirect to desired acivity
                          startActivity(new Intent(FarmForm.this, FarmFieldsList.class));
                          Toast.makeText(FarmForm.this, "Farm Added successfully", Toast.LENGTH_SHORT).show();
                          finish();

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/backgroundWhite"
+    tools:context=".Reports">
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/rouded_corner_brown"
+        android:elevation="4dp"
+        android:id="@+id/back_btn"/>
+
+    <TextView
+        android:id="@+id/TVdisease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12sp"
+        android:layout_marginStart="60dp"
+        android:layout_centerHorizontal="true"
+        android:padding="8sp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:elevation="4sp"
+        android:text="Farms Reports"
+        android:layout_toRightOf="@id/back_btn"
+        android:textAlignment="center"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/diseaseRV"
+        android:layout_width="match_parent"
+        android:layout_below="@id/TVdisease"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:id="@+id/PBDiseaseLoading"/>
+
+</RelativeLayout>

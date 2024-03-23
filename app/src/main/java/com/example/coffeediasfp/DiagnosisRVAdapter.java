@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -104,11 +106,15 @@ public class DiagnosisRVAdapter extends RecyclerView.Adapter<DiagnosisRVAdapter.
             Toast.makeText(context, "Missing ID(s)", Toast.LENGTH_SHORT).show();
             return;
         }
+        //get the current user
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReferenceDisease = firebaseDatabase.getReference("Diseases");
-        DatabaseReference databaseReferenceFarm = firebaseDatabase.getReference("Farms");
-
+//      DatabaseReference databaseReferenceFarm = firebaseDatabase.getReference("Farms");
+        DatabaseReference databaseReferenceFarm = firebaseDatabase.getReference("AllFarms").child(user.getUid()).child("Farms");
         databaseReferenceDisease.child(diseaseID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot diseaseSnapshot) {
@@ -159,7 +165,7 @@ public class DiagnosisRVAdapter extends RecyclerView.Adapter<DiagnosisRVAdapter.
         // Set holder data using fetched values
         holder.famrNameTV.setText(farmName);
         holder.diseaseNameTv.setText(diseaseName);
-        holder.percentage.setText(diagnosisModal.getPercentage());
+        holder.percentage.setText("Confidence: " + diagnosisModal.getPercentage());
         setAnimation(holder.itemView, holder.getAdapterPosition());
     }
 

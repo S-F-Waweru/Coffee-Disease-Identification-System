@@ -82,6 +82,7 @@ public class Recommendation extends AppCompatActivity implements RecommendationR
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddRecommendation.class);
                 startActivity(i);
+                finish();
             }
         });
 

@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +46,33 @@ public class DiagnosisList extends AppCompatActivity {
     FloatingActionButton addDiagnosis;
 
 
+    String userId, email;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user ;
+
+    //on start method
+    public void onStart(){
+        super.onStart();
+
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            userId = user.getUid();
+            email = user.getEmail();
+            //        database stuff
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReferenceFarm = firebaseDatabase.getReference("AllFarms").child(userId).child("Farms");
+            databaseReferenceFarm.setValue(true);
+        }else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +80,10 @@ public class DiagnosisList extends AppCompatActivity {
         setContentView(R.layout.activity_diagnosis_list);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+
         databaseReferenceDiagnosis = firebaseDatabase.getReference("Diagnosis");
+//        databaseReferenceFarm = firebaseDatabase.getReference("Farms");
+
         farmSpinner = findViewById(R.id.idFarmSpinner);
         loadingProgress = findViewById(R.id.loadingProgress);
         diseaseMap = findViewById(R.id.showDiseaseMap);
@@ -82,7 +114,7 @@ public class DiagnosisList extends AppCompatActivity {
 
 
 //       loads the farm to spin
-        loadFarms();
+//        loadFarms();
 //        diagnosisRV.setAdapter(diagnosisRVAdapter);
 
         //loadd recyclerViwe
@@ -124,7 +156,7 @@ public class DiagnosisList extends AppCompatActivity {
 
     // get all farms in the database
     private void loadFarms(){
-        databaseReferenceFarm = firebaseDatabase.getReference("Farms");
+
         databaseReferenceFarm.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

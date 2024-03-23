@@ -75,8 +75,9 @@ public class HomeFragment extends Fragment {
         cardModalArrayList.add(new CardModal("Identify Disease", R.drawable.search, "Predict", IdentifyDiseaseActivity.class));
         cardModalArrayList.add(new CardModal("Farm Fields", R.drawable.farm, "All Fields", FarmFieldsList.class));
         cardModalArrayList.add(new CardModal("Recommendations", R.drawable.baseline_done_all_24, " View", Recommendation.class));
-        cardModalArrayList.add(new CardModal("Diagnosis Report", R.drawable.baseline_done_all_24, " View", DiagnosisList.class));
+        cardModalArrayList.add(new CardModal(" All Diagnosis", R.drawable.baseline_done_all_24, " View", DiagnosisList.class));
         cardModalArrayList.add(new CardModal(" Disease Mapping", R.drawable.ic_disease_map, " View", DiseaseHeatmapActivity.class));
+        cardModalArrayList.add(new CardModal(" Farm Reports", R.drawable.ic_disease_map, " View", Reports.class));
 
 
 

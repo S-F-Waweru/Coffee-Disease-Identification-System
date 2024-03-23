@@ -6,8 +6,8 @@
         android:id="@+id/tool_profile"
         />
     <item
-        android:title="Settings"
+        android:title="Log out"
         android:icon="@drawable/leaf"
-        android:id="@+id/tool_settings"
+        android:id="@+id/tool_logout"
         />
 </menu>

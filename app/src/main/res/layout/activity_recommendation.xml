@@ -16,7 +16,7 @@
         android:fontFamily="@font/open_sans_bold"
         android:textSize="18sp"
         android:layout_margin="12dp"
-        android:textColor="@color/green"
+        android:textColor="@color/black"
         android:id="@+id/idTVDiseseRecommendation"
         android:layout_marginBottom="12sp"
         android:padding="8sp"

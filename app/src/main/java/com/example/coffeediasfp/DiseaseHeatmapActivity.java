@@ -218,6 +218,8 @@ public class DiseaseHeatmapActivity extends AppCompatActivity implements OnMapRe
                     if(diagnosisModal.getDiseaseID().equals(diseaseID) &&
                             diagnosisModal.getFarmID().equals(farmId)){
                         locationString.add(diagnosisModal.getLocation());
+                    }else{
+                        Toast.makeText(DiseaseHeatmapActivity.this, "Null in DiseaseHEatmap", Toast.LENGTH_SHORT).show();
                     }
                 }
 
